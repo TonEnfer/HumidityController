@@ -7,13 +7,5 @@
 
 #include <FSM/FsmNode.h>
 
-static FsmNode* switchNode(FsmNode* current, FsmNode* next) {
-	if (current->NodeExitFunction != NULL) {
-		current->NodeExitFunction();
-	}
-	if (next->NodeEnterFunction != NULL) {
-		next->NodeEnterFunction();
-	}
-	return next;
-}
+
 

@@ -13,7 +13,15 @@ public:
 	void (*NodeEnterFunction)(void) = NULL;
 	void (*NodeExitFunction)(void) = NULL;
 	void (*NodeSwitchFunction)(void) = NULL;
-	static FsmNode* switchNode(FsmNode* current, FsmNode* next);
+	static FsmNode* switchNode(FsmNode* current, FsmNode* next) {
+		if (current->NodeExitFunction != NULL) {
+			current->NodeExitFunction();
+		}
+		if (next->NodeEnterFunction != NULL) {
+			next->NodeEnterFunction();
+		}
+		return next;
+	}
 };
 
 #endif /* FSMNODE_H_ */

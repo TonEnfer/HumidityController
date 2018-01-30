@@ -12,5 +12,9 @@ Output::Output() {
 
 }
 
-void Output::on();
-void Output::off();
+void Output::on() {
+
+}
+void Output::off() {
+
+}
