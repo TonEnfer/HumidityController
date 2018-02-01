@@ -6,12 +6,15 @@
  */
 
 #include <HAL/BME280.h>
+namespace HAL {
 
 BME280::BME280() {
-	// TODO Auto-generated constructor stub
-
+	// TODO BME280 Написать конструктор
 }
 
-uint8_t BME280::getHum(){
+uint8_t BME280::getHum() {
+	// TODO BME280 Написать метод, возвращающий влажность
 	return 0;
+}
+
 }

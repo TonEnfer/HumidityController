@@ -9,7 +9,7 @@
 #define SHOWINSTHUM_H_
 
 #include <FSM/FsmNode.h>
-
+namespace FSM {
 class ShowInstalledHumidity: public FsmNode {
 private:
 	ShowInstalledHumidity();
@@ -24,5 +24,5 @@ public:
 public:
 
 };
-
+}
 #endif /* SHOWINSTHUM_H_ */

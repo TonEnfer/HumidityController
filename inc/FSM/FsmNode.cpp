@@ -7,5 +7,7 @@
 
 #include <FSM/FsmNode.h>
 
+namespace FSM {
+}
 
 

@@ -5,12 +5,12 @@
  *      Author: anton.samoylov
  */
 
-#ifndef FSM_H_
-#define FSM_H_
+#ifndef FINALSTATEMASHINE_H_
+#define FINALSTATEMASHINE_H_
 #include <FSM/ShowCurHum.h>
 #include <FSM/ShowInstHum.h>
-
-class FSM {
+namespace FSM {
+class FinalStateMashine {
 private:
 	FsmNode* showCurHum;
 	FsmNode* showCurTime;
@@ -20,11 +20,10 @@ private:
 
 	FsmNode* current;
 
-
 public:
-	FSM();
+	FinalStateMashine();
 	void run(void);
 	FsmNode* getNode(void);
 };
-
-#endif /* FSM_H_ */
+}
+#endif /* FINALSTATEMASHINE_H_ */

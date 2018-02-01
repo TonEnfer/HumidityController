@@ -6,9 +6,9 @@
  */
 
 #include <FSM/EditInstHum.h>
-
+namespace FSM {
 EditInstHum::EditInstHum() {
 	// TODO Auto-generated constructor stub
 
 }
-
+}

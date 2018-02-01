@@ -9,7 +9,7 @@
 #define SHOWCURHUM_H_
 
 #include <FSM/FsmNode.h>
-
+namespace FSM {
 class ShowCurrentHumidity: public FsmNode {
 private:
 	ShowCurrentHumidity();
@@ -24,5 +24,5 @@ public:
 	FsmNode* NodeSwitchFunction(void);
 
 };
-
+}
 #endif /* SHOWCURHUM_H_ */

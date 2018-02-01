@@ -6,7 +6,7 @@
  */
 
 #include <HAL/Output.h>
-
+namespace HAL {
 Output::Output() {
 	// TODO Auto-generated constructor stub
 
@@ -17,4 +17,5 @@ void Output::on() {
 }
 void Output::off() {
 
+}
 }

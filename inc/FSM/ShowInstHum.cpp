@@ -6,7 +6,7 @@
  */
 
 #include <FSM/ShowInstHum.h>
-
+namespace FSM {
 ShowInstalledHumidity::ShowInstalledHumidity(FsmNode** showCurrentHum,
 		FsmNode** editInstallHum) {
 	this->showCurrentHum = showCurrentHum;
@@ -19,3 +19,4 @@ FsmNode* ShowInstalledHumidity::NodeSwitchFunction(void) {
 	return NULL;
 }
 
+}

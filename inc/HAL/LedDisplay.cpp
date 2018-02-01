@@ -6,7 +6,7 @@
  */
 
 #include <HAL/LedDisplay.h>
-
+namespace HAL {
 LedDisplay::LedDisplay() {
 
 }
@@ -16,12 +16,12 @@ void LedDisplay::init() {
 }
 
 void LedDisplay::show(uint8_t number) {
-	if(number > 99)
-	{}
-	else
-	{}
+	if (number > 99) {
+	} else {
+	}
 }
 
 void LedDisplay::off() {
 	this->show(100);
+}
 }

@@ -6,9 +6,9 @@
  */
 
 #include <FSM/EditInstTime.h>
-
+namespace FSM {
 EditInstTime::EditInstTime() {
 	// TODO Auto-generated constructor stub
 
 }
-
+}

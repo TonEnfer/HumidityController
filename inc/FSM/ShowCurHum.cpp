@@ -6,7 +6,7 @@
  */
 
 #include <FSM/ShowCurHum.h>
-
+namespace FSM {
 ShowCurrentHumidity::ShowCurrentHumidity(FsmNode** showInstallHum,
 		FsmNode** showCurrentTime, FsmNode** editInstallTime) {
 	this->showCurrentTime = showCurrentTime;
@@ -22,4 +22,5 @@ FsmNode* ShowCurrentHumidity::NodeSwitchFunction(void) {
 }
 void ShowCurrentHumidity::NodeExitFunction(void) {
 
+}
 }

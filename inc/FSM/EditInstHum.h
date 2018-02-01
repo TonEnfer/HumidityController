@@ -7,10 +7,14 @@
 
 #ifndef EDITINSTHUM_H_
 #define EDITINSTHUM_H_
+
 #include <FSM/FsmNode.h>
-class EditInstHum: public FsmNode  {
+namespace FSM {
+
+class EditInstHum: public FsmNode {
 public:
 	EditInstHum();
 };
 
+}
 #endif /* EDITINSTHUM_H_ */

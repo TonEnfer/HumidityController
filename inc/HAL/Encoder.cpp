@@ -6,7 +6,7 @@
  */
 
 #include <HAL/Encoder.h>
-
+namespace HAL {
 Encoder::Encoder() {
 	// TODO Auto-generated constructor stub
 
@@ -18,7 +18,7 @@ bool Encoder::press() {
 	return tmp;
 }
 
-bool Encoder::longPress(){
+bool Encoder::longPress() {
 	bool tmp = this->longPres;
 	this->longPres = false;
 	return tmp;
@@ -34,4 +34,5 @@ int Encoder::getPosition() {
 	int tmp = this->position;
 	this->position = 0;
 	return tmp;
+}
 }

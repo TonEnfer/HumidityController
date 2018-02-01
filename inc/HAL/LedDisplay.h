@@ -7,7 +7,7 @@
 
 #ifndef LEDDISPLAY_H_
 #define LEDDISPLAY_H_
-
+namespace HAL {
 #include "stm32f0xx.h"
 
 class LedDisplay {
@@ -17,5 +17,5 @@ public:
 	void show(uint8_t);
 	void off();
 };
-
+}
 #endif /* LEDDISPLAY_H_ */

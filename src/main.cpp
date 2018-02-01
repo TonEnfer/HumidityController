@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "stm32f0xx.h"
 
 #include <HAL/BME280.h>
@@ -5,16 +7,19 @@
 #include <HAL/LedDisplay.h>
 #include <HAL/Output.h>
 
-#include <FSM/FSM.h>
-#include <stdlib.h>
 #include <FixNew.h>
+#include <FSM/FinalStateMashine.h>
 
-LedDisplay display;
-BME280 sensor;
-Output out;
-Encoder enc;
 
-FSM fsm;
+
+
+
+HAL::LedDisplay display;
+HAL::BME280 sensor;
+HAL::Output out;
+HAL::Encoder enc;
+
+FSM::FinalStateMashine fsm;
 
 void init() {
 	display.init();

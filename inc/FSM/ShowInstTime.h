@@ -8,9 +8,12 @@
 #ifndef SHOWINSTTIME_H_
 #define SHOWINSTTIME_H_
 #include <FSM/FsmNode.h>
-class ShowInstTime: public FsmNode  {
+namespace FSM {
+
+class ShowInstTime: public FsmNode {
 public:
 	ShowInstTime();
 };
 
+}
 #endif /* SHOWINSTTIME_H_ */

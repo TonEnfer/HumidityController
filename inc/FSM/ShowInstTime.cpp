@@ -6,9 +6,9 @@
  */
 
 #include <FSM/ShowInstTime.h>
-
+namespace FSM {
 ShowInstTime::ShowInstTime() {
 	// TODO Auto-generated constructor stub
 
 }
-
+}

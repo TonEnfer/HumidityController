@@ -9,7 +9,7 @@
 #define ENCODER_H_
 
 #include "stm32f0xx.h"
-
+namespace HAL {
 class Encoder {
 public:
 	Encoder();
@@ -23,5 +23,5 @@ private:
 	bool rotation = false;
 	int position = 0;
 };
-
+}
 #endif /* ENCODER_H_ */

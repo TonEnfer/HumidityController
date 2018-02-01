@@ -5,9 +5,9 @@
  *      Author: anton.samoylov
  */
 
-#include <FSM/FSM.h>
+#include <FSM/FinalStateMashine.h>
 
-
+namespace FSM {
 FsmNode* switchNode(FsmNode* current, FsmNode* next) {
 	if(current!=NULL)
 		current->NodeExitFunction();
@@ -15,7 +15,7 @@ FsmNode* switchNode(FsmNode* current, FsmNode* next) {
 		next->NodeEnterFunction();
 	return next;
 }
-FSM::FSM() {
+FinalStateMashine::FinalStateMashine() {
 	//Init FSM node this
 	showCurHum = new ShowCurrentHumidity(&showInstHum,&showCurTime,&editInstTime);
 	showCurTime = new FsmNode();
@@ -25,14 +25,15 @@ FSM::FSM() {
 	current = showCurHum;
 }
 
-void FSM::run(void){
+void FinalStateMashine::run(void){
 	FsmNode* newNode = current->NodeSwitchFunction();
 	if(newNode!=current && newNode!=NULL){
 		current = switchNode(current, newNode);
 	}
 }
 
-FsmNode* FSM::getNode(void){
+FsmNode* FinalStateMashine::getNode(void){
 //	return current;
 	return NULL;
+}
 }
