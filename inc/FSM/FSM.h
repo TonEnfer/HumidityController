@@ -8,6 +8,7 @@
 #ifndef FSM_H_
 #define FSM_H_
 #include <FSM/ShowCurHum.h>
+#include <FSM/ShowInstHum.h>
 
 class FSM {
 private:
@@ -15,8 +16,11 @@ private:
 	FsmNode* showCurTime;
 	FsmNode* editInstTime;
 	FsmNode* showInstHum;
+	FsmNode* editInstHum;
 
 	FsmNode* current;
+
+
 public:
 	FSM();
 	void run(void);

@@ -13,6 +13,7 @@ public:
 	virtual void NodeEnterFunction(void){}
 	virtual void NodeExitFunction(void){}
 	virtual FsmNode* NodeSwitchFunction(void){return NULL;}
+	//virtual ~FsmNode();
 };
 
 #endif /* FSMNODE_H_ */

@@ -15,13 +15,13 @@ FsmNode* switchNode(FsmNode* current, FsmNode* next) {
 		next->NodeEnterFunction();
 	return next;
 }
-FsmNode inst = FsmNode();
 FSM::FSM() {
 	//Init FSM node this
 	showCurHum = new ShowCurrentHumidity(&showInstHum,&showCurTime,&editInstTime);
 	showCurTime = new FsmNode();
 	editInstTime = new FsmNode();
-	showInstHum = new FsmNode();;
+	showInstHum = new ShowInstalledHumidity(&showCurHum,&editInstHum);
+	editInstHum = new FsmNode();
 	current = showCurHum;
 }
 
