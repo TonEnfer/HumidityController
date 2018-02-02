@@ -17,9 +17,16 @@ ShowCurrentHumidity::ShowCurrentHumidity(FsmNode** showInstallHum,
 void ShowCurrentHumidity::NodeEnterFunction() {
 
 }
+
+
 FsmNode* ShowCurrentHumidity::NodeSwitchFunction(void) {
+
+	HAL::Display.show(Settings::currentHumidity);
+	HAL::Out.autoSwitch();
+
 	return this;
 }
+
 void ShowCurrentHumidity::NodeExitFunction(void) {
 
 }

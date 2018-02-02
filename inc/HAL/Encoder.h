@@ -10,18 +10,23 @@
 
 #include "stm32f0xx.h"
 namespace HAL {
-class Encoder {
+class Encoder_class {
 public:
-	Encoder();
+	Encoder_class();
+	void init();
 	bool press();
 	bool longPress();
 	bool rotate();
 	int getPosition();
+
 private:
 	bool pres = false;
 	bool longPres = false;
 	bool rotation = false;
 	int position = 0;
+//protected:
+
 };
+extern Encoder_class Encoder;
 }
 #endif /* ENCODER_H_ */

@@ -1,33 +1,24 @@
+#include "stm32f030x6.h"
 #include <stdlib.h>
+#include <FixNew.h>
 
-#include "stm32f0xx.h"
-
-#include <HAL/BME280.h>
-#include <HAL/Encoder.h>
+#include <HAL/Sensor.h>
 #include <HAL/LedDisplay.h>
+#include <HAL/Encoder.h>
 #include <HAL/Output.h>
 
-#include <FixNew.h>
 #include <FSM/FinalStateMashine.h>
 
-
-
-
-
-HAL::LedDisplay display;
-HAL::BME280 sensor;
-HAL::Output out;
-HAL::Encoder enc;
+#include <Settings.h>
 
 FSM::FinalStateMashine fsm;
 
 void init() {
-	display.init();
+	HAL::Sensor->init();
+	//HAL::Encoder.init();
 }
 
 int main(void) {
-
-
 	init();
 	while (true) {
 		fsm.run();

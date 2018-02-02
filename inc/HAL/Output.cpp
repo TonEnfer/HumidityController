@@ -18,4 +18,12 @@ void Output::on() {
 void Output::off() {
 
 }
+
+void Output::autoSwitch() {
+	if (Settings::currentHumidity > Settings::maximumHumidity)
+		this->on();
+	else
+		this->off();
+}
+Output Out = Output();
 }

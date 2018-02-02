@@ -17,5 +17,6 @@ public:
 	void show(uint8_t);
 	void off();
 };
+extern LedDisplay Display;
 }
 #endif /* LEDDISPLAY_H_ */

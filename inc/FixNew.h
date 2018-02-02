@@ -1,29 +1,23 @@
 /*
  * FixNew.h
+
  *
  *  Created on: 1 февр. 2018 г.
  *      Author: anton.samoylov
  */
+#pragma once
+#include <stdlib.h>
+//#include "stm32f0xx.h"
 
-#ifndef FIXNEW_H_
-#define FIXNEW_H_
+using namespace std;
 
-void *operator new(size_t size) {
-	return malloc(size);
-}
+void *operator new(size_t size);
 
-void *operator new[](size_t size) {
-	return malloc(size);
-}
+void *operator new[](size_t size);
 
-void operator delete(void *p) {
-	free(p);
-}
+void operator delete(void *p);
 
-void operator delete[](void *p) {
-	free(p);
-}
+void operator delete[](void *p);
 
 
 
-#endif /* FIXNEW_H_ */

@@ -24,4 +24,5 @@ void LedDisplay::show(uint8_t number) {
 void LedDisplay::off() {
 	this->show(100);
 }
+LedDisplay Display = LedDisplay();
 }

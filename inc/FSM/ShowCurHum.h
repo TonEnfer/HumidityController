@@ -9,6 +9,9 @@
 #define SHOWCURHUM_H_
 
 #include <FSM/FsmNode.h>
+#include <HAL/LedDisplay.h>
+#include <HAL/Output.h>
+#include <Settings.h>
 namespace FSM {
 class ShowCurrentHumidity: public FsmNode {
 private:
