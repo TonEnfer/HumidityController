@@ -15,6 +15,7 @@ FSM::FinalStateMashine fsm;
 
 void init() {
 	HAL::Sensor->init();
+	volatile unsigned int ms = RTC_SSR_SS;
 	//HAL::Encoder.init();
 }
 

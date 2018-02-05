@@ -11,6 +11,7 @@
 #include <FSM/FsmNode.h>
 #include <HAL/LedDisplay.h>
 #include <HAL/Output.h>
+#include <HAL/Encoder.h>
 #include <Settings.h>
 namespace FSM {
 class ShowCurrentHumidity: public FsmNode {

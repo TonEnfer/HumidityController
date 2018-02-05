@@ -4,11 +4,11 @@
  *  Created on: 30 янв. 2018 г.
  *      Author: anton.samoylov
  */
-
+// TODO Реализовать методы
 #include <HAL/Output.h>
 namespace HAL {
 Output::Output() {
-	// TODO Auto-generated constructor stub
+
 
 }
 

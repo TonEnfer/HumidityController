@@ -9,6 +9,8 @@
 #define SHOWINSTHUM_H_
 
 #include <FSM/FsmNode.h>
+#include <HAL/Encoder.h>
+#include <Settings.h>
 namespace FSM {
 class ShowInstalledHumidity: public FsmNode {
 private:

@@ -9,30 +9,31 @@
 
 namespace FSM {
 FsmNode* switchNode(FsmNode* current, FsmNode* next) {
-	if(current!=NULL)
+	if (current != NULL)
 		current->NodeExitFunction();
-	if(next!=NULL)
+	if (next != NULL)
 		next->NodeEnterFunction();
 	return next;
 }
 FinalStateMashine::FinalStateMashine() {
 	//Init FSM node this
-	showCurHum = new ShowCurrentHumidity(&showInstHum,&showCurTime,&editInstTime);
-	showCurTime = new FsmNode();
-	editInstTime = new FsmNode();
-	showInstHum = new ShowInstalledHumidity(&showCurHum,&editInstHum);
-	editInstHum = new FsmNode();
+	showCurHum = new ShowCurrentHumidity(&showInstHum, &showCurTime,
+			&editInstTime);
+	showCurTime = new ShowCurrentTime(&showCurHum, &editInstTime);
+	editInstTime = new EditCurrentTime();
+	showInstHum = new ShowInstalledHumidity(&showCurHum, &editInstHum);
+	editInstHum = new EditInstalledHumidity();
 	current = showCurHum;
 }
 
-void FinalStateMashine::run(void){
+void FinalStateMashine::run(void) {
 	FsmNode* newNode = current->NodeSwitchFunction();
-	if(newNode!=current && newNode!=NULL){
+	if (newNode != current && newNode != NULL) {
 		current = switchNode(current, newNode);
 	}
 }
 
-FsmNode* FinalStateMashine::getNode(void){
+FsmNode* FinalStateMashine::getCurrentNode(void) {
 //	return current;
 	return NULL;
 }

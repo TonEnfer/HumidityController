@@ -4,27 +4,27 @@
  *  Created on: 30 янв. 2018 г.
  *      Author: anton.samoylov
  */
-
+// TODO Проверить методы
 #include <HAL/Encoder.h>
 namespace HAL {
 Encoder_class::Encoder_class() {
-	// TODO Auto-generated constructor stub
+
 
 }
 
-bool Encoder_class::press() {
+bool Encoder_class::isPressed() {
 	bool tmp = this->pres;
 	this->pres = false;
 	return tmp;
 }
 
-bool Encoder_class::longPress() {
+bool Encoder_class::isLongPressed() {
 	bool tmp = this->longPres;
 	this->longPres = false;
 	return tmp;
 }
 
-bool Encoder_class::rotate() {
+bool Encoder_class::isRotate() {
 	bool tmp = this->rotation;
 	this->rotation = false;
 	return tmp;

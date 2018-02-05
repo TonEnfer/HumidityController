@@ -1,22 +1,19 @@
 /*
- * EditInstHum.h
+ * EditInstTime.h
  *
  *  Created on: 1 февр. 2018 г.
  *      Author: anton.samoylov
  */
 
-#ifndef EDITINSTHUM_H_
-#define EDITINSTHUM_H_
-
+#ifndef EDITCURRENTTIME_H_
+#define EDITCURRENTTIME_H_
 #include <FSM/EndpointNode.h>
 #include <Settings.h>
 #include <HAL/Encoder.h>
 namespace FSM {
-
-class EditInstalledHumidity: public EndpointNode {
+class EditCurrentTime: public EndpointNode {
 public:
 	void NodeEnterFunction(void);
 };
-
 }
-#endif /* EDITINSTHUM_H_ */
+#endif /* EDITCURRENTTIME_H_ */

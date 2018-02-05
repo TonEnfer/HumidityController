@@ -7,8 +7,12 @@
 
 #ifndef FINALSTATEMASHINE_H_
 #define FINALSTATEMASHINE_H_
+#include <FSM/EditCurrentTime.h>
 #include <FSM/ShowCurHum.h>
 #include <FSM/ShowInstHum.h>
+#include <FSM/EditInstHum.h>
+#include <FSM/ShowCurrentTime.h>
+
 namespace FSM {
 class FinalStateMashine {
 private:
@@ -23,7 +27,7 @@ private:
 public:
 	FinalStateMashine();
 	void run(void);
-	FsmNode* getNode(void);
+	FsmNode* getCurrentNode(void);
 };
 }
 #endif /* FINALSTATEMASHINE_H_ */

@@ -14,9 +14,9 @@ class Encoder_class {
 public:
 	Encoder_class();
 	void init();
-	bool press();
-	bool longPress();
-	bool rotate();
+	bool isPressed();
+	bool isLongPressed();
+	bool isRotate();
 	int getPosition();
 
 private:

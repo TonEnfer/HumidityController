@@ -15,7 +15,9 @@ public:
 	virtual void NodeEnterFunction(void){}
 	virtual void NodeExitFunction(void){}
 	virtual FsmNode* NodeSwitchFunction(void){return NULL;}
-	virtual ~FsmNode(){delete(this);}
+	virtual void setCallbackNode(FsmNode *cb){}
+	virtual ~FsmNode(){}
+
 };
 
 }

@@ -7,8 +7,12 @@
 
 #include <Settings.h>
 
-namespace Settings
-{
-
+namespace Settings {
+char normalize(char value) {
+	if (value > 100)
+		return 99;
+	else
+		return value;
+}
 }
 

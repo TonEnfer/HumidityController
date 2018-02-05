@@ -18,9 +18,18 @@ void ShowCurrentHumidity::NodeEnterFunction() {
 
 }
 
-
 FsmNode* ShowCurrentHumidity::NodeSwitchFunction(void) {
 
+	if (HAL::Encoder.isLongPressed())
+		return (*showInstallHum);
+	else if (HAL::Encoder.isPressed())
+		return (*showCurrentTime);
+	else if (HAL::Encoder.isRotate()) {
+		if (editInstallTime != NULL && (*editInstallTime) != NULL) {
+			(*editInstallTime)->setCallbackNode(*showCurrentTime);
+			return (*editInstallTime);
+		}
+	}
 	HAL::Display.show(Settings::currentHumidity);
 	HAL::Out.autoSwitch();
 

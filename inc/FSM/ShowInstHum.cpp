@@ -13,10 +13,24 @@ ShowInstalledHumidity::ShowInstalledHumidity(FsmNode** showCurrentHum,
 	this->editInstallHum = editInstallHum;
 }
 
-void ShowInstalledHumidity::NodeEnterFunction(void){};
-void ShowInstalledHumidity::NodeExitFunction(void){};
+void ShowInstalledHumidity::NodeEnterFunction(void) {
+}
+
+void ShowInstalledHumidity::NodeExitFunction(void) {
+}
+
 FsmNode* ShowInstalledHumidity::NodeSwitchFunction(void) {
-	return NULL;
+//TODO: Эту херню нужно в течение 5 секунд показывать
+	if (Settings::currentTime == 0)
+		return (*showCurrentHum);
+	else if (HAL::Encoder.isRotate()) {
+		if (editInstallHum != NULL && (*editInstallHum) != NULL) {
+			(*editInstallHum)->setCallbackNode(this);
+			//(*(*editInstallHum)).setCallbackNode(this);
+			return (*editInstallHum);
+		}
+	}
+	return this;
 }
 
 }

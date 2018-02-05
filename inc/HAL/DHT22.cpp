@@ -6,15 +6,13 @@
  */
 
 #include <HAL/DHT22.h>
-
+// TODO Реализовать методы
 namespace HAL {
 
 DHT22::DHT22() {
-	// TODO Auto-generated constructor stub
 
 }
 void DHT22::init() {
-
 }
 uint8_t DHT22::getHumidity() {
  return 0;
