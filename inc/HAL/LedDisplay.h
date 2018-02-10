@@ -7,8 +7,8 @@
 
 #ifndef LEDDISPLAY_H_
 #define LEDDISPLAY_H_
+#include <main.h>
 namespace HAL {
-#include "stm32f0xx.h"
 
 class LedDisplay {
 public:

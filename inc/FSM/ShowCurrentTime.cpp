@@ -15,7 +15,8 @@ void ShowCurrentTime::NodeEnterFunction(void) {
 
 }
 void ShowCurrentTime::NodeExitFunction(void) {
-	if (Settings::currentHumidity <= Settings::maximumHumidity)
+	if (Settings::Parameters.getCurHumidity()
+			<= Settings::Parameters.getMaxHumidity())
 		HAL::Out.off();
 }
 FsmNode* ShowCurrentTime::NodeSwitchFunction(void) {
@@ -25,8 +26,8 @@ FsmNode* ShowCurrentTime::NodeSwitchFunction(void) {
 			return (*EditCurTime);
 		}
 
-	if (Settings::currentTime != 0) {
-		HAL::Display.show(Settings::currentTime);
+	if (Settings::Parameters.getCurTime() != 0) {
+		HAL::Display.show(Settings::Parameters.getCurTime());
 		HAL::Out.on();
 	} else
 		return (*ShowCurHum);

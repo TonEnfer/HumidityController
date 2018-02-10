@@ -8,8 +8,8 @@
 #ifndef OUTPUT_H_
 #define OUTPUT_H_
 
-#include "stm32f0xx.h"
-#include <Settings.h>
+#include <main.h>
+
 namespace HAL {
 class Output {
 public:

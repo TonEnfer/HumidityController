@@ -9,7 +9,6 @@
 namespace HAL {
 Output::Output() {
 
-
 }
 
 void Output::on() {
@@ -20,10 +19,11 @@ void Output::off() {
 }
 
 void Output::autoSwitch() {
-	if (Settings::currentHumidity > Settings::maximumHumidity)
-		this->on();
-	else
-		this->off();
+//	if (Settings::Parameters.getCurHumidity()
+//			> Settings::Parameters.getMaxHumidity())
+//		this->on();
+//	else
+//		this->off();
 }
 Output Out = Output();
 }

@@ -7,6 +7,9 @@
 
 #ifndef FINALSTATEMASHINE_H_
 #define FINALSTATEMASHINE_H_
+
+#include <main.h>
+
 #include <FSM/EditCurrentTime.h>
 #include <FSM/ShowCurHum.h>
 #include <FSM/ShowInstHum.h>

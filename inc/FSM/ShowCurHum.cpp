@@ -30,7 +30,7 @@ FsmNode* ShowCurrentHumidity::NodeSwitchFunction(void) {
 			return (*editInstallTime);
 		}
 	}
-	HAL::Display.show(Settings::currentHumidity);
+	HAL::Display.show(Settings::Parameters.getCurHumidity());
 	HAL::Out.autoSwitch();
 
 	return this;

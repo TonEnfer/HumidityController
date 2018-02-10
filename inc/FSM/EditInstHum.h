@@ -8,9 +8,12 @@
 #ifndef EDITINSTHUM_H_
 #define EDITINSTHUM_H_
 
+#include <main.h>
 #include <FSM/EndpointNode.h>
 #include <Settings.h>
 #include <HAL/Encoder.h>
+
+using namespace Settings;
 namespace FSM {
 
 class EditInstalledHumidity: public EndpointNode {

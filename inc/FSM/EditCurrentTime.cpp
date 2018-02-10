@@ -12,7 +12,8 @@ namespace FSM {
 //
 //}
 void EditCurrentTime::NodeEnterFunction(void) {
-	Settings::currentTime = Settings::normalize(
-			Settings::currentTime + HAL::Encoder.getPosition());
+	uint32_t newTime = Parameters.getInsTime() + HAL::Encoder.getPosition();
+	Parameters.setInstTime(newTime);
+	Parameters.setCurTime(newTime);
 }
 }

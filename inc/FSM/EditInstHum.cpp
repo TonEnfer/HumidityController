@@ -8,9 +8,9 @@
 #include <FSM/EditInstHum.h>
 namespace FSM {
 void EditInstalledHumidity::NodeEnterFunction(void) {
-	if (HAL::Encoder.isRotate()) {
-		Settings::maximumHumidity = Settings::normalize(
-				Settings::maximumHumidity + HAL::Encoder.getPosition());
-	}
+	uint8_t newHum = Parameters.normalize(
+			Parameters.getMaxHumidity() + HAL::Encoder.getPosition());
+	Parameters.setMaxHumidity(newHum);
+
 }
 }

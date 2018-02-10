@@ -14,8 +14,11 @@ DHT22::DHT22() {
 }
 void DHT22::init() {
 }
-uint8_t DHT22::getHumidity() {
+int32_t DHT22::getHumidity() {
  return 0;
+}
+int32_t DHT22::getTemperature(){
+return 0;
 }
 
 #ifdef USE_DHT22

@@ -8,7 +8,7 @@
 #ifndef BME280_H_
 #define BME280_H_
 
-#include "stm32f0xx.h"
+#include <main.h>
 #include <HAL/Sensor.h>
 
 namespace HAL {
@@ -16,7 +16,8 @@ class BME280: public Sensor_class {
 public:
 	BME280();
 	void init();
-	uint8_t getHumidity();
+	int32_t getHumidity();
+int32_t getTemperature();
 	~BME280(){};
 };
 }

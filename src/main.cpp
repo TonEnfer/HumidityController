@@ -1,27 +1,24 @@
-#include "stm32f030x6.h"
-#include <stdlib.h>
-#include <FixNew.h>
+/*
+ * main.cpp
+ *
+ *  Created on: 10 февр. 2018 г.
+ *      Author: anton.samoylov
+ */
 
-#include <HAL/Sensor.h>
-#include <HAL/LedDisplay.h>
-#include <HAL/Encoder.h>
-#include <HAL/Output.h>
+#include <main.h>
 
 #include <FSM/FinalStateMashine.h>
-
 #include <Settings.h>
-
 FSM::FinalStateMashine fsm;
+volatile uint8_t a = 0;
+int main() {
+	fsm = FSM::FinalStateMashine();
+	Settings::Parameters.setCurHumidity(10);
+	Settings::Parameters.setCurTime(6666);
 
-void init() {
-	HAL::Sensor->init();
-	volatile unsigned int ms = RTC_SSR_SS;
-	//HAL::Encoder.init();
-}
-
-int main(void) {
-	init();
 	while (true) {
-		fsm.run();
+		a++;
 	}
+	return 0;
 }
+

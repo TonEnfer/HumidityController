@@ -8,6 +8,7 @@
 #ifndef DHT22_H_
 #define DHT22_H_
 
+#include <main.h>
 #include <HAL/Sensor.h>
 
 namespace HAL {
@@ -16,7 +17,8 @@ class DHT22: public Sensor_class {
 public:
 	DHT22();
 	void init();
-	uint8_t getHumidity();
+	int32_t getHumidity();
+	int32_t getTemperature();
 	~DHT22(){};
 };
 

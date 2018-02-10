@@ -7,7 +7,10 @@
 
 #ifndef ENDPOINTNODE_H_
 #define ENDPOINTNODE_H_
+
+#include <main.h>
 #include <FSM/FsmNode.h>
+
 namespace FSM {
 
 class EndpointNode: public FsmNode {

@@ -14,8 +14,12 @@ BME280::BME280() {
 }
 void BME280::init(){}
 
-uint8_t BME280::getHumidity() {
+int32_t BME280::getHumidity() {
 
+	return 0;
+}
+int32_t BME280::getTemperature()
+{
 	return 0;
 }
 #ifdef USE_BME280

@@ -7,7 +7,9 @@
 
 #ifndef FSMNODE_H_
 #define FSMNODE_H_
-#include "stddef.h"
+
+#include <main.h>
+
 namespace FSM {
 
 class FsmNode {

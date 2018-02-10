@@ -3,7 +3,7 @@
   * @file      startup_stm32.s dedicated to STM32F030F4Px device
   * @author    Ac6
   * @version   V1.0.0
-  * @date      2018-01-30
+  * @date      2018-02-10
   ******************************************************************************
   */
 

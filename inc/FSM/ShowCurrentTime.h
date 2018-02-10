@@ -7,11 +7,14 @@
 
 #ifndef SHOWCURRENTTIME_H_
 #define SHOWCURRENTTIME_H_
+
+#include <main.h>
 #include <FSM/FsmNode.h>
 #include <HAL/Encoder.h>
 #include <Settings.h>
 #include <HAL/LedDisplay.h>
 #include <HAL/Output.h>
+
 namespace FSM {
 
 class ShowCurrentTime: public FsmNode {
