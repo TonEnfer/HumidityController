@@ -52,14 +52,31 @@ uint8_t Settings_class::normalize(uint8_t value) {
 		return value;
 }
 
-param_t Settings_class::restoreFromMemory(){
-	param_t p;
-	return p;
+void Settings_class::restoreFromMemory(){
+	//TODO Разобраться на реальном железе
+	volatile uint32_t tmpData[sizeof(param_t)];
+	__IO uint32_t tmp = SETTINGS_ADDRESS;
+	for(uint16_t i =0;i<sizeof(param_t);i++){
+		tmpData[i] = (*(__IO uint32_t*)tmp);
+		tmp+=4;
+	}
 }
 
-void Settings_class::saveToMemory(param_t *param)
-{
 
+void Settings_class::saveToMemory(param_t param)
+{
+	//TODO Разобраться на реальном железе
+	HAL::Flash.erasePage(SETTINGS_ADDRESS);
+
+	for(uint16_t i = 0; i < sizeof(param_t); i++)
+	{
+		HAL::Flash.programHalfWord(SETTINGS_ADDRESS+4*i,15);
+	}
+}
+
+void Settings_class::saveToMemory()
+{
+	saveToMemory(this->param);
 }
 
 Settings_class Parameters = Settings_class();
