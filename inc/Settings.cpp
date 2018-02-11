@@ -67,11 +67,13 @@ void Settings_class::restoreFromMemory() {
 }
 
 void Settings_class::saveToMemory() {
+	HAL::Flash.unlock();
 	HAL::Flash.erasePage(SETTINGS_START_ADDRESS);	//Очищаем страницу
 	uint16_t *tmp = (uint16_t *) &param;
 	for (uint8_t i = 0; i < sizeof(param_t); i++) {	//Записываем в память по 16 бит
 		HAL::Flash.programHalfWord(SETTINGS_START_ADDRESS + 2 * i, *tmp++);
 	}
+	HAL::Flash.lock();
 }
 
 Settings_class Parameters = Settings_class();
