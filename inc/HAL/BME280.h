@@ -11,6 +11,7 @@
 #include <main.h>
 #include <HAL/Sensor.h>
 #include <HAL/Drivers/I2C.h>
+#include <delay.h>
 
 // All possible I2C device address values
 #define BME280_ADDR_G                   (uint8_t)0x76 // I2C address when SDO connected to GND
