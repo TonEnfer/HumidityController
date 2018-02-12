@@ -15,8 +15,8 @@ class Sensor_class {
 public:
 	//Sensor_class();
 	virtual void init() = 0;
-	virtual int32_t getHumidity() = 0;
-	virtual int32_t getTemperature() = 0;
+	virtual uint16_t getHumidity() = 0;
+	virtual uint16_t getTemperature() = 0;
 	virtual ~Sensor_class(){};
 private:
 
