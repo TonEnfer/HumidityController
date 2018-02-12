@@ -52,7 +52,6 @@ uint8_t Settings_class::normalize(uint8_t value) {
 }
 
 void Settings_class::restoreFromMemory() {
-	//TODO Разобраться на реальном железе
 	uint16_t data[sizeof(param_t)] = { };
 	__IO uint32_t addr = SETTINGS_START_ADDRESS;
 	for (uint8_t i = 0; i < sizeof(param_t); i++) {
