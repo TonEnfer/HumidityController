@@ -1,3 +1,10 @@
+/*
+ * interrupts.h
+ *
+ *  Created on: 14 февр. 2018 г.
+ *      Author: anton.samoylov
+ */
+
 #ifndef INTERRUPTS_H_
 #define INTERRUPTS_H_
 
