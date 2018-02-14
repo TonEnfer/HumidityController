@@ -17,19 +17,19 @@ void ShowCurrentHumidity::NodeEnterFunction() {
 }
 
 FsmNode& ShowCurrentHumidity::NodeSwitchFunction(void) {
-//
-//	FsmNode& curTime = ShowCurrentTime::getInstance();
-//	EndpointNode&  editTime  =EditCurrentTime::getInstance();
-//	if (HAL::Encoder.isLongPressed())
-//		return (ShowInstalledHumidity::getInstance());
-//	else if (HAL::Encoder.isPressed())
-//		return (curTime);
-//	else if (HAL::Encoder.isRotate()) {
-//		editTime.setCallbackNode(&curTime);
-//		return editTime;
-//	}
-//	HAL::Display.show(Settings::Parameters.getCurHumidity());
-//	HAL::Out.autoSwitch();
+
+	FsmNode& curTime = ShowCurrentTime::getInstance();
+	EndpointNode&  editTime  =EditCurrentTime::getInstance();
+	if (HAL::Encoder.isLongPressed())
+		return (ShowInstalledHumidity::getInstance());
+	else if (HAL::Encoder.isPressed())
+		return (curTime);
+	else if (HAL::Encoder.isRotate()) {
+		editTime.setCallbackNode(&curTime);
+		return editTime;
+	}
+	HAL::Display.show(Settings::Parameters.getCurHumidity());
+	HAL::Out.autoSwitch();
 
 	return *this;
 }

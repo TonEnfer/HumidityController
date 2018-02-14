@@ -19,9 +19,10 @@
 namespace FSM {
 class ShowCurrentHumidity: public FsmNode {
 public:
-	const static ShowCurrentHumidity me;
-	static ShowCurrentHumidity getInstance(){
-		return ShowCurrentHumidity::me;
+
+	static ShowCurrentHumidity& getInstance() {
+		static ShowCurrentHumidity me;
+		return me;
 	}
 	void NodeEnterFunction(void);
 	void NodeExitFunction(void);

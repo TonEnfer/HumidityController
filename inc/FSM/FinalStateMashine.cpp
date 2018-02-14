@@ -16,8 +16,7 @@ FsmNode* switchNode(FsmNode* current, FsmNode* next) {
 	return next;
 }
 FinalStateMashine::FinalStateMashine() {
-	current = NULL;
-	current = &(ShowCurrentHumidity::getInstance());
+	current = &ShowCurrentHumidity::getInstance();
 }
 
 void FinalStateMashine::run(void) {
@@ -28,7 +27,7 @@ void FinalStateMashine::run(void) {
 }
 
 FsmNode* FinalStateMashine::getCurrentNode(void) {
-//	return current;
-	return NULL;
+	return current;
+//	return NULL;
 }
 }

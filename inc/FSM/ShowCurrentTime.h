@@ -10,6 +10,8 @@
 
 #include <main.h>
 #include <FSM/FsmNode.h>
+#include <FSM/ShowCurHum.h>
+#include <FSM/EditCurrentTime.h>
 #include <HAL/Encoder.h>
 #include <Settings.h>
 #include <HAL/LedDisplay.h>
@@ -19,13 +21,15 @@ namespace FSM {
 
 class ShowCurrentTime: public FsmNode {
 private:
-	ShowCurrentTime(){}
-	~ShowCurrentTime(){}
+	ShowCurrentTime() {
+	}
+	~ShowCurrentTime() {
+	}
 public:
-//	static ShowCurrentTime& getInstance(){
-//		static ShowCurrentTime t;
-//		return t;
-//	}
+	static ShowCurrentTime& getInstance() {
+		static ShowCurrentTime t;
+		return t;
+	}
 	void NodeEnterFunction(void);
 	void NodeExitFunction(void);
 	FsmNode& NodeSwitchFunction(void);

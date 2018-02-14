@@ -19,6 +19,10 @@ namespace FSM {
 class EditInstalledHumidity: public EndpointNode {
 public:
 	void NodeEnterFunction(void);
+	static EditInstalledHumidity& getInstance() {
+		static EditInstalledHumidity eih;
+		return eih;
+	}
 };
 
 }

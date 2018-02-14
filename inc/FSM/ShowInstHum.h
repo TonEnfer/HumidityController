@@ -10,21 +10,24 @@
 
 #include <main.h>
 #include <FSM/FsmNode.h>
+#include <FSM/EditInstHum.h>
+#include <FSM/ShowCurHum.h>
 #include <HAL/Encoder.h>
 #include <Settings.h>
 
 namespace FSM {
 class ShowInstalledHumidity: public FsmNode {
 private:
-	ShowInstalledHumidity(){}
-	~ShowInstalledHumidity(){}
+	ShowInstalledHumidity() {
+	}
+	~ShowInstalledHumidity() {
+	}
 
 public:
-//	static ShowInstalledHumidity& getInstance()
-//	{
-//		static ShowInstalledHumidity h;
-//		return h;
-//	}
+	static ShowInstalledHumidity& getInstance() {
+		static ShowInstalledHumidity h;
+		return h;
+	}
 	void NodeEnterFunction(void);
 	void NodeExitFunction(void);
 	FsmNode& NodeSwitchFunction(void);

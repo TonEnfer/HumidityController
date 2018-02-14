@@ -12,4 +12,5 @@ void EditCurrentTime::NodeEnterFunction(void) {
 	Parameters.setInstTime(newTime);
 	Parameters.setCurTime(newTime);
 }
+
 }
