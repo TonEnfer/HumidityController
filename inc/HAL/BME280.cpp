@@ -10,7 +10,7 @@
 namespace HAL {
 
 BME280::BME280() {
-	this->t_fine = 0x80000;
+	t_fine = 0x80000;
 }
 void BME280::init() {
 	reset();
@@ -542,7 +542,7 @@ int32_t BME280::PatoAlt(uint32_t P) {
 }
 
 #ifdef USE_BME280
-Sensor_class *Sensor = new BME280();
+BME280 Sensor = BME280();
 #endif
 
 }

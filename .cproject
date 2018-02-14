@@ -17,8 +17,8 @@
 				<configuration artifactExtension="elf" artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.942074592" name="Debug" parent="fr.ac6.managedbuild.config.gnu.cross.exe.debug" postannouncebuildStep="Generating binary and Printing size information:" postbuildStep="arm-none-eabi-objcopy -O binary &quot;${BuildArtifactFileBaseName}.elf&quot; &quot;${BuildArtifactFileBaseName}.bin&quot;; arm-none-eabi-size &quot;${BuildArtifactFileName}&quot;">
 					<folderInfo id="fr.ac6.managedbuild.config.gnu.cross.exe.debug.942074592." name="/" resourcePath="">
 						<toolChain id="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug.1771517002" name="Ac6 STM32 MCU GCC" superClass="fr.ac6.managedbuild.toolchain.gnu.cross.exe.debug">
-							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.990148984" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" value="STM32F030F4Px" valueType="string"/>
-							<option id="fr.ac6.managedbuild.option.gnu.cross.board.1924817076" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" value="genericBoard" valueType="string"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.mcu.990148984" name="Mcu" superClass="fr.ac6.managedbuild.option.gnu.cross.mcu" useByScannerDiscovery="false" value="STM32F030F4Px" valueType="string"/>
+							<option id="fr.ac6.managedbuild.option.gnu.cross.board.1924817076" name="Board" superClass="fr.ac6.managedbuild.option.gnu.cross.board" useByScannerDiscovery="false" value="genericBoard" valueType="string"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="fr.ac6.managedbuild.targetPlatform.gnu.cross.1811970505" isAbstract="false" osList="all" superClass="fr.ac6.managedbuild.targetPlatform.gnu.cross"/>
 							<builder buildPath="${workspace_loc:/HumController}/Debug" id="fr.ac6.managedbuild.builder.gnu.cross.1606935175" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="fr.ac6.managedbuild.builder.gnu.cross"/>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.771873177" name="MCU GCC Compiler" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler">
@@ -39,6 +39,10 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/CMSIS/core&quot;"/>
 								</option>
 								<option id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata.721564363" name="Place the data in their own section (-fdata-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.dialect.std.945576288" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.prof.89077093" name="Generate prof information (-p)" superClass="gnu.c.compiler.option.debugging.prof" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.debugging.gprof.1580941465" name="Generate gprof information (-pg)" superClass="gnu.c.compiler.option.debugging.gprof" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.c.compiler.option.debugging.codecov.480760747" name="Generate gcov information (-ftest-coverage -fprofile-arcs)" superClass="gnu.c.compiler.option.debugging.codecov" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c.1884629302" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.c"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s.1041414054" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.compiler.input.s"/>
 							</tool>
@@ -60,11 +64,19 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/CMSIS/device&quot;"/>
 								</option>
 								<option id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata.1656493527" name="Place the data in their own section (-fdata-sections)" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.fdata" useByScannerDiscovery="false" value="true" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.debugging.prof.1694915216" name="Generate prof information (-p)" superClass="gnu.cpp.compiler.option.debugging.prof" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.debugging.gprof.470777498" name="Generate gprof information (-pg)" superClass="gnu.cpp.compiler.option.debugging.gprof" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.debugging.codecov.1448595260" name="Generate gcov information (-ftest-coverage -fprofile-arcs)" superClass="gnu.cpp.compiler.option.debugging.codecov" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.cpp.compiler.option.dialect.std.1010047177" superClass="gnu.cpp.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.cpp.compiler.dialect.c++1y" valueType="enumerated"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp.1678769913" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.cpp"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s.687064572" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.compiler.input.s"/>
 							</tool>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.c.linker.2013802653" name="MCU GCC Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.c.linker"/>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker.1675616478" name="MCU G++ Linker" superClass="fr.ac6.managedbuild.tool.gnu.cross.cpp.linker">
+								<option id="gnu.cpp.link.option.libs.2009233425" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false"/>
+								<option id="gnu.cpp.link.option.debugging.prof.614268603" name="Generate prof information (-p)" superClass="gnu.cpp.link.option.debugging.prof" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.cpp.link.option.debugging.gprof.1509739376" name="Generate gprof information (-pg)" superClass="gnu.cpp.link.option.debugging.gprof" useByScannerDiscovery="false" value="false" valueType="boolean"/>
+								<option id="gnu.cpp.link.option.debugging.codecov.521113733" name="Generate gcov information (-ftest-coverage -fprofile-arcs)" superClass="gnu.cpp.link.option.debugging.codecov" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1627806434" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -72,6 +84,11 @@
 							</tool>
 							<tool id="fr.ac6.managedbuild.tool.gnu.archiver.982658462" name="MCU GCC Archiver" superClass="fr.ac6.managedbuild.tool.gnu.archiver"/>
 							<tool id="fr.ac6.managedbuild.tool.gnu.cross.assembler.281408233" name="MCU GCC Assembler" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler">
+								<option id="gnu.both.asm.option.include.paths.511802186" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/CMSIS/core&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/CMSIS/device&quot;"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.644279762" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="fr.ac6.managedbuild.tool.gnu.cross.assembler.input.680563835" superClass="fr.ac6.managedbuild.tool.gnu.cross.assembler.input"/>
 							</tool>

@@ -173,5 +173,8 @@ private:
 	uint32_t PaToMmHg(uint32_t PQ24_8);
 	int32_t PatoAlt(uint32_t P);
 };
+#ifdef USE_BME280
+extern BME280 Sensor;
+#endif
 }
 #endif /* BME280_H_ */

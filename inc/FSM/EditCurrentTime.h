@@ -16,8 +16,14 @@
 using namespace Settings;
 namespace FSM {
 class EditCurrentTime: public EndpointNode {
+private:
+	EditCurrentTime(){}
 public:
 	void NodeEnterFunction(void);
+//	static EditCurrentTime& getInstance(){
+//		static EditCurrentTime edct;
+//		return edct;
+//	}
 };
 }
 #endif /* EDITCURRENTTIME_H_ */

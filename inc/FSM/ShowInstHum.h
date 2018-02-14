@@ -16,17 +16,18 @@
 namespace FSM {
 class ShowInstalledHumidity: public FsmNode {
 private:
-	ShowInstalledHumidity();
-	FsmNode** showCurrentHum;
-	FsmNode** editInstallHum;
+	ShowInstalledHumidity(){}
+	~ShowInstalledHumidity(){}
+
 public:
-	ShowInstalledHumidity(FsmNode** showCurrentHum,
-			FsmNode** editInstallHum);
+//	static ShowInstalledHumidity& getInstance()
+//	{
+//		static ShowInstalledHumidity h;
+//		return h;
+//	}
 	void NodeEnterFunction(void);
 	void NodeExitFunction(void);
-	FsmNode* NodeSwitchFunction(void);
-public:
-
+	FsmNode& NodeSwitchFunction(void);
 };
 }
 #endif /* SHOWINSTHUM_H_ */

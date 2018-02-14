@@ -12,6 +12,19 @@
 
 uint32_t SystemCoreClock = 48000000;
 
+FSM::FinalStateMashine fsm;
+volatile uint8_t a = 0;
+int main() {
+	fsm = FSM::FinalStateMashine();
+	Settings::Parameters.setCurHumidity(10);
+	Settings::Parameters.setCurTime(6666);
+
+	while (true) {
+		a++;
+	}
+	return 0;
+}
+
 void SystemInit() {
 
 	FLASH->ACR |= FLASH_ACR_PRFTBE;
@@ -37,19 +50,5 @@ void SystemInit() {
 	//∆дЄм готовности
 	while ((RCC->CFGR & (uint32_t) RCC_CFGR_SWS) != (uint32_t) 0x08) {
 	}
-
-}
-
-FSM::FinalStateMashine fsm;
-volatile uint8_t a = 0;
-int main() {
-	fsm = FSM::FinalStateMashine();
-	Settings::Parameters.setCurHumidity(10);
-	Settings::Parameters.setCurTime(6666);
-
-	while (true) {
-		a++;
-	}
-	return 0;
 }
 

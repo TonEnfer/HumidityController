@@ -160,7 +160,7 @@ SECTIONS
     _edata = .;        /* define a global symbol at data end */
   } >RAM AT> ROM
 
-  
+	
   /* Uninitialized data section into RAM memory */
   . = ALIGN(4);
   .bss :

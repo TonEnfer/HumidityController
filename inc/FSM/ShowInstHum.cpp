@@ -7,30 +7,24 @@
 
 #include <FSM/ShowInstHum.h>
 namespace FSM {
-ShowInstalledHumidity::ShowInstalledHumidity(FsmNode** showCurrentHum,
-		FsmNode** editInstallHum) {
-	this->showCurrentHum = showCurrentHum;
-	this->editInstallHum = editInstallHum;
-}
-
 void ShowInstalledHumidity::NodeEnterFunction(void) {
 }
 
 void ShowInstalledHumidity::NodeExitFunction(void) {
 }
 
-FsmNode* ShowInstalledHumidity::NodeSwitchFunction(void) {
+FsmNode& ShowInstalledHumidity::NodeSwitchFunction(void) {
 //TODO: Эту херню нужно в течение 5 секунд показывать
-	if (Settings::Parameters.getCurTime() == 0)
-		return (*showCurrentHum);
-	else if (HAL::Encoder.isRotate()) {
-		if (editInstallHum != NULL && (*editInstallHum) != NULL) {
-			(*editInstallHum)->setCallbackNode(this);
-			//(*(*editInstallHum)).setCallbackNode(this);
-			return (*editInstallHum);
-		}
-	}
-	return this;
+//	if (Settings::Parameters.getCurTime() == 0)
+//		return (**showCurrentHum);
+//	else if (HAL::Encoder.isRotate()) {
+//		if (editInstallHum != NULL && (*editInstallHum) != NULL) {
+//			(*editInstallHum)->setCallbackNode(this);
+//			//(*(*editInstallHum)).setCallbackNode(this);
+//			return (**editInstallHum);
+//		}
+//	}
+	return *this;
 }
 
 }

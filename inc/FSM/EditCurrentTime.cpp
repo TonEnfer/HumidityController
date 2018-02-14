@@ -7,10 +7,6 @@
 
 #include <FSM/EditCurrentTime.h>
 namespace FSM {
-//EditCurrentTime::EditCurrentTime() {
-//
-//
-//}
 void EditCurrentTime::NodeEnterFunction(void) {
 	uint32_t newTime = Parameters.getInsTime() + HAL::Encoder.getPosition();
 	Parameters.setInstTime(newTime);

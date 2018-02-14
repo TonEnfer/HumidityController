@@ -16,20 +16,14 @@ FsmNode* switchNode(FsmNode* current, FsmNode* next) {
 	return next;
 }
 FinalStateMashine::FinalStateMashine() {
-	//Init FSM node this
-	showCurHum = new ShowCurrentHumidity(&showInstHum, &showCurTime,
-			&editInstTime);
-	showCurTime = new ShowCurrentTime(&showCurHum, &editInstTime);
-	editInstTime = new EditCurrentTime();
-	showInstHum = new ShowInstalledHumidity(&showCurHum, &editInstHum);
-	editInstHum = new EditInstalledHumidity();
-	current = showCurHum;
+	current = NULL;
+	current = &(ShowCurrentHumidity::getInstance());
 }
 
 void FinalStateMashine::run(void) {
-	FsmNode* newNode = current->NodeSwitchFunction();
-	if (newNode != current && newNode != NULL) {
-		current = switchNode(current, newNode);
+	FsmNode& newNode = current->NodeSwitchFunction();
+	if (&newNode != current) {
+		current = switchNode(current, &newNode);
 	}
 }
 

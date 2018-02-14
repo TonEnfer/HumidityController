@@ -18,18 +18,14 @@
 
 namespace FSM {
 class ShowCurrentHumidity: public FsmNode {
-private:
-	ShowCurrentHumidity();
-	FsmNode** showInstallHum;
-	FsmNode** showCurrentTime;
-	FsmNode** editInstallTime;
 public:
-	ShowCurrentHumidity(FsmNode** showInstallHum, FsmNode** showCurrentTime,
-			FsmNode** editInstallTime);
+	const static ShowCurrentHumidity me;
+	static ShowCurrentHumidity getInstance(){
+		return ShowCurrentHumidity::me;
+	}
 	void NodeEnterFunction(void);
 	void NodeExitFunction(void);
-	FsmNode* NodeSwitchFunction(void);
-
+	FsmNode& NodeSwitchFunction(void);
 };
 }
 #endif /* SHOWCURHUM_H_ */

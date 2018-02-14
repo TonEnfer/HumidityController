@@ -5,35 +5,33 @@
  *      Author: anton.samoylov
  */
 
+#include <FSM/EditCurrentTime.h>
+#include <FSM/EndpointNode.h>
 #include <FSM/ShowCurHum.h>
-namespace FSM {
-ShowCurrentHumidity::ShowCurrentHumidity(FsmNode** showInstallHum,
-		FsmNode** showCurrentTime, FsmNode** editInstallTime) {
-	this->showCurrentTime = showCurrentTime;
-	this->showInstallHum = showInstallHum;
-	this->editInstallTime = editInstallTime;
-}
+#include <FSM/ShowCurrentTime.h>
+#include <FSM/ShowInstHum.h>
 
+namespace FSM {
 void ShowCurrentHumidity::NodeEnterFunction() {
 
 }
 
-FsmNode* ShowCurrentHumidity::NodeSwitchFunction(void) {
+FsmNode& ShowCurrentHumidity::NodeSwitchFunction(void) {
+//
+//	FsmNode& curTime = ShowCurrentTime::getInstance();
+//	EndpointNode&  editTime  =EditCurrentTime::getInstance();
+//	if (HAL::Encoder.isLongPressed())
+//		return (ShowInstalledHumidity::getInstance());
+//	else if (HAL::Encoder.isPressed())
+//		return (curTime);
+//	else if (HAL::Encoder.isRotate()) {
+//		editTime.setCallbackNode(&curTime);
+//		return editTime;
+//	}
+//	HAL::Display.show(Settings::Parameters.getCurHumidity());
+//	HAL::Out.autoSwitch();
 
-	if (HAL::Encoder.isLongPressed())
-		return (*showInstallHum);
-	else if (HAL::Encoder.isPressed())
-		return (*showCurrentTime);
-	else if (HAL::Encoder.isRotate()) {
-		if (editInstallTime != NULL && (*editInstallTime) != NULL) {
-			(*editInstallTime)->setCallbackNode(*showCurrentTime);
-			return (*editInstallTime);
-		}
-	}
-	HAL::Display.show(Settings::Parameters.getCurHumidity());
-	HAL::Out.autoSwitch();
-
-	return this;
+	return *this;
 }
 
 void ShowCurrentHumidity::NodeExitFunction(void) {

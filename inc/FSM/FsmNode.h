@@ -13,13 +13,14 @@
 namespace FSM {
 
 class FsmNode {
-public:
-	virtual void NodeEnterFunction(void){}
-	virtual void NodeExitFunction(void){}
-	virtual FsmNode* NodeSwitchFunction(void){return NULL;}
-	virtual void setCallbackNode(FsmNode *cb){}
+protected:
+	FsmNode(){}
 	virtual ~FsmNode(){}
-
+public:
+	virtual void NodeEnterFunction(void);
+	virtual void NodeExitFunction(void);
+	virtual FsmNode& NodeSwitchFunction(void);
+	virtual void setCallbackNode(FsmNode *cb){}
 };
 
 }

@@ -19,14 +19,7 @@
 namespace FSM {
 class FinalStateMashine {
 private:
-	FsmNode* showCurHum;
-	FsmNode* showCurTime;
-	FsmNode* editInstTime;
-	FsmNode* showInstHum;
-	FsmNode* editInstHum;
-
 	FsmNode* current;
-
 public:
 	FinalStateMashine();
 	void run(void);

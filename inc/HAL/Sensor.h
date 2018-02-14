@@ -14,14 +14,14 @@ namespace HAL {
 class Sensor_class {
 public:
 	//Sensor_class();
-	virtual void init() = 0;
-	virtual uint16_t getHumidity() = 0;
-	virtual uint16_t getTemperature() = 0;
+	virtual void init();
+	virtual uint16_t getHumidity();
+	virtual uint16_t getTemperature();
 	virtual ~Sensor_class(){};
 private:
 
 };
-extern Sensor_class* Sensor;
+//extern Sensor_class* Sensor;
 } /* namespace HAL */
 
 #endif /* SENSOR_H_ */

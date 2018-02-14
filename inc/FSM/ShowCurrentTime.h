@@ -19,13 +19,16 @@ namespace FSM {
 
 class ShowCurrentTime: public FsmNode {
 private:
-	FsmNode** ShowCurHum = NULL;
-	FsmNode** EditCurTime = NULL;
+	ShowCurrentTime(){}
+	~ShowCurrentTime(){}
 public:
-	ShowCurrentTime(FsmNode** ShowCurHum, FsmNode** EditCurTime);
+//	static ShowCurrentTime& getInstance(){
+//		static ShowCurrentTime t;
+//		return t;
+//	}
 	void NodeEnterFunction(void);
 	void NodeExitFunction(void);
-	FsmNode* NodeSwitchFunction(void);
+	FsmNode& NodeSwitchFunction(void);
 };
 
 }

@@ -14,19 +14,20 @@
 namespace FSM {
 
 class EndpointNode: public FsmNode {
+//private:
+//	EndpointNode();
 protected:
 	FsmNode *callbackNode = NULL;
 public:
-	FsmNode* NodeSwitchFunction(void) {
+	FsmNode& NodeSwitchFunction(void) {
 		if (callbackNode != NULL)
-			return callbackNode;
+			return (*callbackNode);
 		else
-			return this;
+			return *this;
 	}
 	void setCallbackNode(FsmNode *cb) {
 		callbackNode = cb;
 	}
-
 };
 
 } /* namespace FSM */
