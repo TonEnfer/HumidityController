@@ -16,11 +16,10 @@ FSM::FinalStateMashine fsm;
 volatile uint8_t a = 0;
 int main() {
 	fsm = FSM::FinalStateMashine();
-	Settings::Parameters.setCurHumidity(10);
-	Settings::Parameters.setCurTime(6666);
 
 	while (true) {
-		a++;
+		fsm.run();
+		delay_us(15);
 	}
 	return 0;
 }
