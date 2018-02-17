@@ -9,6 +9,7 @@
 #define ENCODER_H_
 
 #include <main.h>
+#include <delay.h>
 
 namespace HAL {
 class Encoder_class {
@@ -20,11 +21,13 @@ public:
 	bool isRotate();
 	int getPosition();
 
-private:
 	bool pres = false;
 	bool longPres = false;
 	bool rotation = false;
-	int position = 0;
+	int32_t position = 0;
+
+private:
+
 //protected:
 
 };
