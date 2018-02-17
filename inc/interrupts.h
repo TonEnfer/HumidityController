@@ -54,9 +54,7 @@ extern "C" void TIM1_BRK_UP_TRG_COM_IRQHandler() {
 extern "C" void TIM1_CC_IRQHandler() {
 }
 ;
-extern "C" void TIM16_IRQHandler() {
-}
-;
+
 extern "C" void TIM17_IRQHandler() {
 }
 ;
