@@ -9,7 +9,6 @@
 #define OUTPUT_H_
 
 #include <main.h>
-#include <HAL/Drivers/GPIO.h>
 #include <Settings.h>
 
 namespace HAL {
