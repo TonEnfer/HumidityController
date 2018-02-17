@@ -9,11 +9,11 @@ Humidity controller on STM32F030F4
 
 - *./CMSIS* - стандартные библиотеки
 - *./inc* - общие header'ы
-- *./inc/FSM* - header'ы конечного автомата
-- *./inc/HAL* - Hardware Abstraction Level incs;
-- *./inc/HAL/Drivers* - Low level driver incs;
+	- *./inc/FSM* - header'ы конечного автомата
+	- *./inc/HAL* - Hardware Abstraction Level incs;
+		- *./inc/HAL/Drivers* - Low level driver incs;
 - *./src* - исходный код
-- *./inc/FSM* - исходники конечного автомата
-- *./inc/HAL* - Hardware Abstraction Level src;
-- *./inc/HAL/Drivers* - Low level driver src;
+	- *./src/FSM* - исходники конечного автомата
+	- *./src/HAL* - Hardware Abstraction Level src;
+		- *./src/HAL/Drivers* - Low level driver src;
 - *./startup* - автоматически сгенерированные файлы начальной инициализации контроллера
