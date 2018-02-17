@@ -29,9 +29,7 @@ extern "C" void FLASH_IRQHandler() {
 extern "C" void RCC_IRQHandler() {
 }
 ;
-extern "C" void EXTI0_1_IRQHandler() {
-}
-;
+
 extern "C" void EXTI2_3_IRQHandler() {
 }
 ;
@@ -56,18 +54,6 @@ extern "C" void TIM1_BRK_UP_TRG_COM_IRQHandler() {
 extern "C" void TIM1_CC_IRQHandler() {
 }
 ;
-extern "C" void TIM3_IRQHandler() {
-}
-;
-extern "C" void TIM6_IRQHandler() {
-}
-;
-extern "C" void TIM14_IRQHandler() {
-}
-;
-extern "C" void TIM15_IRQHandler() {
-}
-;
 extern "C" void TIM16_IRQHandler() {
 }
 ;
@@ -77,26 +63,12 @@ extern "C" void TIM17_IRQHandler() {
 extern "C" void I2C1_IRQHandler() {
 }
 ;
-extern "C" void I2C2_IRQHandler() {
-}
-;
 extern "C" void SPI1_IRQHandler() {
-}
-;
-extern "C" void SPI2_IRQHandler() {
 }
 ;
 extern "C" void USART1_IRQHandler() {
 }
 ;
-extern "C" void USART2_IRQHandler() {
-}
-;
-extern "C" void USART3_4_5_6_IRQHandler() {
-}
-;
-extern "C" void USB_IRQHandler() {
-}
 ;
 //extern "C" void Reset_Handler(void);
 
