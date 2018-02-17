@@ -8,18 +8,19 @@
 #include <FSM/ShowInstHum.h>
 namespace FSM {
 void ShowInstalledHumidity::NodeEnterFunction(void) {
+	Settings::Parameters.setNodeShowTime(5);
+	startCountingShowTime();
 }
 
 void ShowInstalledHumidity::NodeExitFunction(void) {
 }
 
 FsmNode& ShowInstalledHumidity::NodeSwitchFunction(void) {
-//TODO: Эту херню нужно в течение 5 секунд показывать
 	FsmNode& editInstallHum = EditInstalledHumidity::getInstance();
-	//FsmNode& me = ShowInstalledHumidity::getInstance();
-	if (Settings::Parameters.getCurTime() == 0)
+	if (Settings::Parameters.getNodeShowTime() == 0) {
+		stopCountingShowTime();
 		return ShowCurrentHumidity::getInstance();
-	else if (HAL::Encoder.isRotate()) {
+	} else if (HAL::Encoder.isRotate()) {
 		editInstallHum.setCallbackNode(this);
 		return editInstallHum;
 	}

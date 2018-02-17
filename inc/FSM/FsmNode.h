@@ -9,6 +9,7 @@
 #define FSMNODE_H_
 
 #include <main.h>
+#include <Settings.h>
 
 namespace FSM {
 
@@ -28,6 +29,11 @@ public:
 	virtual FsmNode& NodeSwitchFunction(void);
 	virtual void setCallbackNode(FsmNode *cb) {
 	}
+	void startCountingShowTime();
+	void stopCountingShowTime();
+protected:
+	void startTimer();
+	void stopTimer();
 };
 
 }
