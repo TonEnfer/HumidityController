@@ -10,13 +10,12 @@
 
 #include <main.h>
 #include <HAL/Sensor.h>
-#include <HAL/Drivers/GPIO.h>
 #include <delay.h>
 
 /* Port and pin with DHT22 sensor*/
 #define DHT22_GPIO_PORT            GPIOB
 #define DHT22_GPIO_CLOCK           RCC_APB2Periph_GPIOB
-#define DHT22_GPIO_PIN             GPIO_Pin_0
+#define DHT22_GPIO_PIN             0
 
 /* DHT22_GetReadings response codes */
 #define DHT22_RCV_OK               0 // Return with no error

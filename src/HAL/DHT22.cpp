@@ -33,7 +33,7 @@ uint32_t DHT22::getReadings(void) {
 
 	// Wait for AM2302 to start communicate
 	wait = 0;
-	while ((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) Bit_SET
+	while ((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) 1
 			&& (wait++ < 200))
 		delay_us(2);
 	if (wait > 50)
@@ -41,14 +41,14 @@ uint32_t DHT22::getReadings(void) {
 
 	// Check ACK strobe from sensor
 	wait = 0;
-	while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) Bit_RESET)
+	while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) 0)
 			&& (wait++ < 100))
 		delay_us(1);
 	if ((wait < 8) || (wait > 15))
 		return DHT22_RCV_BAD_ACK1;
 
 	wait = 0;
-	while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) Bit_SET)
+	while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) 1)
 			&& (wait++ < 100))
 		delay_us(1);
 	if ((wait < 8) || (wait > 15))
@@ -59,20 +59,20 @@ uint32_t DHT22::getReadings(void) {
 	while (i < 40) {
 		// Measure bit start impulse (T_low = 50us)
 		wait = 0;
-		while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) Bit_RESET)
+		while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) 0)
 				&& (wait++ < 20))
 			delay_us(1);
 		if (wait > 16) {
 			// invalid bit start impulse length
 			bits[i] = 0xffff;
-			while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN)
-					== (uint32_t) Bit_SET) && (wait++ < 20))
+			while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) 1)
+					&& (wait++ < 20))
 				delay_us(1);
 		} else {
 			// Measure bit impulse length (T_h0 = 25us, T_h1 = 70us)
 			wait = 0;
-			while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN)
-					== (uint32_t) Bit_SET) && (wait++ < 20))
+			while (((DHT22_GPIO_PORT->IDR & DHT22_GPIO_PIN) == (uint32_t) 1)
+					&& (wait++ < 20))
 				delay_us(1);
 			bits[i] = (wait < 16) ? wait : 0xffff;
 		}
