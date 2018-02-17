@@ -23,6 +23,8 @@ FsmNode& ShowInstalledHumidity::NodeSwitchFunction(void) {
 	} else if (HAL::Encoder.isRotate()) {
 		editInstallHum.setCallbackNode(this);
 		return editInstallHum;
+	} else {
+		HAL::Display.show(Settings::Parameters.getMaxHumidity());
 	}
 	return *this;
 }

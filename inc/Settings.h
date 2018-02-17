@@ -15,10 +15,9 @@ typedef struct {
 typedef struct
 {
 	uint32_t installedTime = 5;		//4 байт
-	uint32_t currentTime = 0;		//4 байт
+	uint32_t nodeShowTime = 5;		//4 байт
 	uint8_t currentHumidity = 0;	//1 байт
-	uint8_t nodeShowTime = 5;		//1 байт
-									//2 - для выравнивания
+									//3 - для выравнивания
 } notSavableParam_t;
 
 class Settings_class {
@@ -28,8 +27,8 @@ protected:
 public:
 	Settings_class();
 
-	uint8_t getNodeShowTime();
-	void setNodeShowTime(uint8_t sht);
+	uint32_t getNodeShowTime();
+	void setNodeShowTime(uint32_t sht);
 	void decNodeShowTime();
 
 	uint8_t getMaxHumidity();

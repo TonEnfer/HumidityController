@@ -8,12 +8,12 @@
 #include <FSM/ShowCurrentTime.h>
 namespace FSM {
 void ShowCurrentTime::NodeEnterFunction(void) {
-
+	uint32_t ct = Settings::Parameters.getInsTime();
+	Settings::Parameters.setNodeShowTime(ct);
+	startCountingShowTime();
 }
 void ShowCurrentTime::NodeExitFunction(void) {
-	if (Settings::Parameters.getCurHumidity()
-			<= Settings::Parameters.getMaxHumidity())
-		HAL::Out.off();
+	stopCountingShowTime();
 }
 FsmNode& ShowCurrentTime::NodeSwitchFunction(void) {
 	FsmNode& EditCurTime = EditCurrentTime::getInstance();
@@ -21,9 +21,12 @@ FsmNode& ShowCurrentTime::NodeSwitchFunction(void) {
 		EditCurTime.setCallbackNode(this);
 		return EditCurTime;
 	}
-
-	if (Settings::Parameters.getCurTime() != 0) {
-		HAL::Display.show(Settings::Parameters.getCurTime());
+	if(HAL::Encoder.isPressed()){
+		return ShowCurrentHumidity::getInstance();
+	}
+	uint8_t ct = (uint8_t)(Settings::Parameters.getNodeShowTime()/60);
+	if (ct != 0) {
+		HAL::Display.show(ct);
 		HAL::Out.on();
 	} else
 		return ShowCurrentHumidity::getInstance();

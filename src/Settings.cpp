@@ -9,16 +9,15 @@
 
 namespace Settings {
 Settings_class::Settings_class() {
-	nsParam.currentHumidity = 0;
-	nsParam.currentTime = 0;
-	nsParam.installedTime = 5;
-	sParam.maximumHumidity = 50;
+	nsParam.currentHumidity = 8;
+	nsParam.installedTime = (3*60)-1;
+	sParam.maximumHumidity = 53;
 	nsParam.nodeShowTime = 5;
 }
-uint8_t Settings_class::getNodeShowTime(){
+uint32_t Settings_class::getNodeShowTime(){
 	return nsParam.nodeShowTime;
 }
-void Settings_class::setNodeShowTime(uint8_t sht){
+void Settings_class::setNodeShowTime(uint32_t sht){
 	nsParam.nodeShowTime = sht;
 }
 
@@ -47,13 +46,6 @@ uint32_t Settings_class::getInsTime() {
 }
 void Settings_class::setInstTime(uint32_t time) {
 	nsParam.installedTime = time;
-}
-
-uint32_t Settings_class::getCurTime() {
-	return nsParam.currentTime;
-}
-void Settings_class::setCurTime(uint32_t time) {
-	nsParam.currentTime = time;
 }
 
 uint8_t Settings_class::normalize(uint8_t value) {
