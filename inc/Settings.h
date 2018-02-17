@@ -8,18 +8,29 @@ namespace Settings {
 #define SETTINGS_END_ADDRESS ((uint32_t)(SETTINGS_START_ADDRESS+(PAGE_SIZE-1)) //Последний адрес страницы (0x08003FFF)
 
 typedef struct {
+	uint8_t maximumHumidity = 0;	//1 байт
+
+} savableParam_t;
+
+typedef struct
+{
 	uint32_t installedTime = 5;		//4 байт
 	uint32_t currentTime = 0;		//4 байт
-	uint8_t maximumHumidity = 0;	//1 байт
 	uint8_t currentHumidity = 0;	//1 байт
+	uint8_t nodeShowTime = 5;		//1 байт
 									//2 - для выравнивания
-} param_t;
+} notSavableParam_t;
 
 class Settings_class {
 protected:
-	param_t param;
+	savableParam_t sParam;
+	notSavableParam_t nsParam;
 public:
 	Settings_class();
+
+	uint8_t getNodeShowTime();
+	void setNodeShowTime(uint8_t sht);
+	void decNodeShowTime();
 
 	uint8_t getMaxHumidity();
 	void setMaxHumidity(uint8_t hum);
