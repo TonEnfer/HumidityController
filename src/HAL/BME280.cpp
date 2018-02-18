@@ -43,9 +43,8 @@ uint16_t BME280::getTemperature() {
 //   reg - register number
 //   value - new register value
 void BME280::writeReg(uint8_t reg, uint8_t value) {
-	uint8_t buf[2] = { reg, value };
-
-	HAL::I2C.write(buf, 2, BME280_ADDR, I2C_STOP);
+	uint8_t val[1] = { value };
+	HAL::I2C.write(BME280_ADDR, reg, val, 1);
 }
 
 // Read BME280 register
@@ -55,11 +54,8 @@ void BME280::writeReg(uint8_t reg, uint8_t value) {
 //   register value
 uint8_t BME280::readReg(uint8_t reg) {
 	uint8_t value = 0; // Initialize value in case of I2C timeout
-
-	// Send register address
-	HAL::I2C.write(&reg, 1, BME280_ADDR, I2C_NOSTOP);
 	// Read register value
-	HAL::I2C.read(&value, 1, BME280_ADDR);
+	HAL::I2C.read(BME280_ADDR, reg, &value, 1);
 
 	return value;
 }
@@ -206,24 +202,15 @@ void BME280::setOSRSH(uint8_t osrs) {
 // Read calibration data
 BME280_RESULT BME280::readCalibration(void) {
 	uint8_t buf[7];
-
 	// Read pressure and temperature calibration data (calib00..calib23)
-	buf[0] = BME280_REG_CALIB00; // calib00 register address
-	if (HAL::I2C.write(&buf[0], 1, BME280_ADDR, I2C_NOSTOP) != I2C_SUCCESS)
+	if (HAL::I2C.read(BME280_ADDR, BME280_REG_CALIB00, (uint8_t *) &cal_param,
+			24) != I2C_SUCCESS)
 		return BME280_ERROR;
-	if (HAL::I2C.read((uint8_t *) &cal_param, 24, BME280_ADDR) != I2C_SUCCESS)
-		return BME280_ERROR;
-
 	// Skip one byte (calib24) and read H1 (calib25)
 	cal_param.dig_H1 = readReg(BME280_REG_CALIB25);
-
 	// Read humidity calibration data (calib26..calib41)
-	buf[0] = BME280_REG_CALIB26; // calib26 register address
-	if (HAL::I2C.write(&buf[0], 1, BME280_ADDR, I2C_NOSTOP) != I2C_SUCCESS)
+	if (HAL::I2C.read(BME280_ADDR, BME280_REG_CALIB26, buf, 7) != I2C_SUCCESS)
 		return BME280_ERROR;
-	if (HAL::I2C.read(buf, 7, BME280_ADDR) != I2C_SUCCESS)
-		return BME280_ERROR;
-
 	// Unpack data
 	cal_param.dig_H2 = (int16_t) ((((int8_t) buf[1]) << 8) | buf[0]);
 	cal_param.dig_H3 = buf[2];
@@ -242,22 +229,15 @@ BME280_RESULT BME280::readCalibration(void) {
 // note: '0x80000' result means no data for pressure (measurement skipped or not ready yet)
 BME280_RESULT BME280::readUP(int32_t *UP) {
 	uint8_t buf[3];
-
 	// Clear result value
 	*UP = 0x80000;
-
 	// Send 'press_msb' register address
 	buf[0] = BME280_REG_PRESS_MSB;
-	if (!HAL::I2C.write(&buf[0], 1, BME280_ADDR, I2C_NOSTOP))
-		return BME280_ERROR;
-
 	// Read the 'press' register (_msb, _lsb, _xlsb)
-	if (HAL::I2C.read(&buf[0], 3, BME280_ADDR)) {
+	if (HAL::I2C.read(BME280_ADDR, BME280_REG_PRESS_MSB, &buf[0], 3)) {
 		*UP = (int32_t) ((buf[0] << 12) | (buf[1] << 4) | (buf[2] >> 4));
-
 		return BME280_SUCCESS;
 	}
-
 	return BME280_ERROR;
 }
 
@@ -269,22 +249,13 @@ BME280_RESULT BME280::readUP(int32_t *UP) {
 // note: '0x80000' result means no data for temperature (measurement skipped or not ready yet)
 BME280_RESULT BME280::readUT(int32_t *UT) {
 	uint8_t buf[3];
-
 	// Clear result value
 	*UT = 0x80000;
-
-	// Send 'temp_msb' register address
-	buf[0] = BME280_REG_TEMP_MSB;
-	if (!HAL::I2C.write(&buf[0], 1, BME280_ADDR, I2C_NOSTOP))
-		return BME280_ERROR;
-
 	// Read the 'temp' register (_msb, _lsb, _xlsb)
-	if (HAL::I2C.read(&buf[0], 3, BME280_ADDR)) {
+	if (HAL::I2C.read(BME280_ADDR, BME280_REG_TEMP_MSB, &buf[0], 3)) {
 		*UT = (int32_t) ((buf[0] << 12) | (buf[1] << 4) | (buf[2] >> 4));
-
 		return BME280_SUCCESS;
 	}
-
 	return BME280_ERROR;
 }
 
@@ -296,22 +267,15 @@ BME280_RESULT BME280::readUT(int32_t *UT) {
 // note: '0x8000' result means no data for humidity (measurement skipped or not ready yet)
 BME280_RESULT BME280::readUH(int32_t *UH) {
 	uint8_t buf[2];
-
 	// Clear result value
 	*UH = 0x8000;
-
 	// Send 'hum_msb' register address
 	buf[0] = BME280_REG_HUM_MSB;
-	if (!HAL::I2C.write(&buf[0], 1, BME280_ADDR, I2C_NOSTOP))
-		return BME280_ERROR;
-
 	// Read the 'hum' register (_msb, _lsb)
-	if (HAL::I2C.read(&buf[0], 2, BME280_ADDR)) {
+	if (HAL::I2C.read(BME280_ADDR, BME280_REG_HUM_MSB, &buf[0], 2)) {
 		*UH = (int32_t) ((buf[0] << 8) | buf[1]);
-
 		return BME280_SUCCESS;
 	}
-
 	return BME280_ERROR;
 }
 
@@ -325,26 +289,17 @@ BME280_RESULT BME280::readUH(int32_t *UH) {
 // note: 0x80000 value for UT and UP and 0x8000 for UH means no data
 BME280_RESULT BME280::readUTPH(int32_t *UT, int32_t *UP, int32_t *UH) {
 	uint8_t buf[8];
-
 	// Clear result values
 	*UT = 0x80000;
 	*UP = 0x80000;
 	*UH = 0x8000;
-
-	// Send 'press_msb' register address
-	buf[0] = BME280_REG_PRESS_MSB;
-	if (!HAL::I2C.write(&buf[0], 1, BME280_ADDR, I2C_NOSTOP))
-		return BME280_ERROR;
-
 	// Read the 'press', 'temp' and 'hum' registers
-	if (HAL::I2C.read(&buf[0], 8, BME280_ADDR)) {
+	if (HAL::I2C.read(BME280_ADDR, BME280_REG_PRESS_MSB, &buf[0], 8)) {
 		*UP = (int32_t) ((buf[0] << 12) | (buf[1] << 4) | (buf[2] >> 4));
 		*UT = (int32_t) ((buf[3] << 12) | (buf[4] << 4) | (buf[5] >> 4));
 		*UH = (int32_t) ((buf[6] << 8) | buf[7]);
-
 		return BME280_SUCCESS;
 	}
-
 	return BME280_ERROR;
 }
 
@@ -454,8 +409,7 @@ uint32_t BME280::calcH(int32_t UH) {
 uint32_t BME280::PaToMmHg(uint32_t PQ24_8) {
 	// Truncate the pressure value to Q24.2 format and multiply by Q0.20 constant (~0.00750061683)
 	// The multiply product will be Q10.22 pressure value in mmHg
-	uint32_t p_mmHg = (PQ24_8 >> 6) * BME_MMHG_Q0_20
-	;
+	uint32_t p_mmHg = (PQ24_8 >> 6) * BME_MMHG_Q0_20;
 
 	// (p_mmHg >> 22) -> integer part from Q10.22 value
 	// ((uint32_t)p_mmHg << 10) >> 18 -> fractional part truncated down to 14 bits

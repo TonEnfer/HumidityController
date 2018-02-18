@@ -9,198 +9,168 @@
 
 namespace HAL {
 
-I2C_class::I2C_class(I2C_TypeDef* I2Cx) {
-	this->I2Cx = I2Cx;
+/*
+ Выполняет первичную настройку шины.
+ Настраивает порты, альтернативные функции.
+ Настраивает тайминги для работы шины.
+ */
+void I2C_class::init(void) {
+	RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+	RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;		// Включаю тактирование I2C
+	// Настройка ног PB6, PB7
+	GPIOA->MODER |= GPIO_MODER_MODER9_1 | GPIO_MODER_MODER10_1;	// Режим альтернативной функции
+	GPIOA->OTYPER |= GPIO_OTYPER_OT_9 | GPIO_OTYPER_OT_10;// Открытый коллектор
+	GPIOA->OSPEEDR |= GPIO_OSPEEDR_OSPEEDR9 | GPIO_OSPEEDR_OSPEEDR10;// Максимальная скорость
+	// Выбор альтернативной функции
+	HAL::GPIO::pinAFConfig(GPIOB, 6, 1);	// I2C1_SCL
+	HAL::GPIO::pinAFConfig(GPIOB, 6, 1);	// I2C1_SDA
+
+	I2C_BUS->CR1 &= ~I2C_CR1_PE;			// Отключаю I2C
+	while (I2C_BUS->CR1 & I2C_CR1_PE) {
+	};	// Жду пока отключится
+
+	// Частота тактирования модуля I2C = 48 МГц
+	// Частота шины I2C = 100 kHz
+	// Настраиваю тайминги
+	I2C_BUS->TIMINGR |= (0xB << I2C_OFFSET_TIMINGR_PRESC)
+			| (0x13 << I2C_OFFSET_TIMINGR_SCLL)
+			| (0xF << I2C_OFFSET_TIMINGR_SCLH)
+			| (0x4 << I2C_OFFSET_TIMINGR_SCLDEL)
+			| (0x2 << I2C_OFFSET_TIMINGR_SDADEL);
+
+	I2C_BUS->CR1 |= I2C_CR1_PE;					// Включаю I2C
+	while ((I2C_BUS->CR1 & I2C_CR1_PE) == 0) {
+	};	// Жду пока включится
 }
 
-I2C_Status I2C_class::waitEvent(I2C_TypeDef* I2Cx, uint32_t I2C_Event) {
-//	volatile uint32_t wait = I2C_WAIT_TIMEOUT;
-//	uint32_t reg;
-//
-//	while (wait--) {
-//		reg = I2Cx->ISR;
-//		//reg |= I2Cx->SR2 << 16;
-//		reg &= I2C_FLAG_MASK;
-//		if ((reg & I2C_Event) == I2C_Event)
-//			return I2C_SUCCESS;
-//	}
-
-	return I2C_ERROR;
-}
-I2C_Status I2C_class::waitFlagSet(I2C_TypeDef* I2Cx, uint32_t I2C_Flag) {
-//	volatile uint32_t wait = I2C_WAIT_TIMEOUT;
-//	volatile uint16_t *preg;
-//
-//	// Determine which I2C register to be read
-//	preg = (I2C_Flag & 0x80000000) ? &(I2Cx->ISR) : &(I2Cx->SR2);
-//	I2C_Flag &= 0xFFFF;
-//
-//	// Wait for flag to be set
-//	while (wait--) {
-//		if (*preg & I2C_Flag)
-//			return I2C_SUCCESS;
-//	}
-//
-	return I2C_ERROR;
-}
-I2C_Status I2C_class::waitFlagReset(I2C_TypeDef* I2Cx, uint32_t I2C_Flag) {
-//	volatile uint32_t wait = I2C_WAIT_TIMEOUT;
-//	volatile uint16_t *preg;
-//
-//	// Determine which I2C register to be read
-//	preg = (I2C_Flag & 0x80000000) ? &(I2Cx->ISR) : &(I2Cx->SR2);
-//	I2C_Flag &= 0xFFFF;
-//
-//	// Wait until flag cleared
-//	while (wait--) {
-//		if (!(*preg & I2C_Flag))
-//			return I2C_SUCCESS;
-//	}
-//
-	return I2C_ERROR;
+/*
+ Это служебная функция, использовать её не нужно.
+ Устанавливает направление данных - приём или передача.
+ Задаёт объём пересылаемых данных.
+ Задаёт адрес ведомого устройства.
+ Выдаёт старт на шину.
+ Параметры:
+ Direction - направление (0-отправка, 1-приём)
+ Adress - адрес ведомого устройства
+ Size - размер данных (от 1 до 255 байт)
+ */
+void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
+		uint8_t Adress, uint8_t Size) {
+	//I2C_BUS->CR2 &= ~I2C_CR2_AUTOEND;				// Выдавать стоп вручную
+	//I2C_BUS->CR2 &= ~I2C_CR2_RELOAD;				// Не использовать режим перезагрузки
+	if (Direction)
+		I2C_BUS->CR2 |= I2C_CR2_RD_WRN;	// Режим приёма
+	else
+		I2C_BUS->CR2 &= ~I2C_CR2_RD_WRN;			// Режим передачи
+	I2C_BUS->CR2 &= ~I2C_CR2_NBYTES;				// Очистить размер данных
+	I2C_BUS->CR2 |= Size << I2C_OFFSET_CR2_NBYTES;	// Установить размер данных
+	I2C_BUS->CR2 &= ~I2C_CR2_SADD;	// Очистить адрес ведомого устройства
+	I2C_BUS->CR2 |= Adress;			// Установить адрес ведомого устройства
+	I2C_BUS->CR2 |= I2C_CR2_START;					// Выдать старт на шину
+	while ((I2C_BUS->ISR & I2C_ISR_BUSY) == 0) {
+	};	// Ожидать выдачу старта
 }
 
-I2C_Status I2C_class::write(const uint8_t* buf, uint32_t nbytes,
-		uint8_t SlaveAddress, I2C_STOP_TypeDef stop) {
-//	// Initiate a START sequence
-//	I2Cx->CR2 |= I2C_CR2_START;
-//	// Wait for EV5
-//	if (waitEvent(I2Cx, I2C_EVENT_EV5) == I2C_ERROR)
-//		return I2C_ERROR;
-//
-//	// Send the slave address (EV5)
-//	I2Cx->TXDR = SlaveAddress & ~(0x0001); // Last bit be reset (transmitter mode)
-//
-//	// Wait for EV6
-//	if (waitEvent(I2Cx, I2C_EVENT_EV6) == I2C_ERROR)
-//		return I2C_ERROR;
-//
-//	// Send first byte (EV8)
-//	I2Cx->TXDR = *buf++;
-//	// Send rest of data (if present)
-//	while (--nbytes) {
-//		// Wait for BTF flag set
-//		if (waitFlagSet(I2Cx, I2C_F_BTF) == I2C_ERROR)
-//			return I2C_ERROR;
-//		// Transmit byte via I2C
-//		I2Cx->TXDR = *buf++;
-//	}
-//	// Wait for BTF flag set
-//	if (waitFlagSet(I2Cx, I2C_F_BTF) == I2C_ERROR)
-//		return I2C_ERROR;
-//
-//	// Transmission end
-//	if (stop == I2C_STOP) {
-//		// Generate a STOP condition
-//		I2Cx->CR2 |= I2C_CR2_STOP;
-//		// Wait for a STOP flag
-//		if (waitFlagReset(I2Cx, I2C_F_STOPF) == I2C_ERROR)
-//			return I2C_ERROR;
-//	}
-//
-	return I2C_SUCCESS;
+/*
+ Это служебная функция, использовать её не нужно.
+ Выдаёт стоп на шину.
+ Очищает флаги.
+ Проверяет наличие ошибок, очищает флаги ошибок.
+ */
+void I2C_class::stop(void) {
+	I2C_BUS->CR2 |= I2C_CR2_STOP;				// Выдать стоп на шину
+	while (I2C_BUS->ISR & I2C_ISR_BUSY) {
+	};		// Ожидать выдачу стопа
+	// Очищаю флаги - необходимо для дальнейшей работы шины
+	I2C_BUS->ICR |= I2C_ICR_STOPCF;		// STOP флаг
+	I2C_BUS->ICR |= I2C_ICR_NACKCF;		// NACK флаг
+	// Если есть ошибки на шине - очищаю флаги
+	if (I2C_BUS->ISR & (I2C_ISR_ARLO | I2C_ISR_BERR)) {
+		I2C_BUS->ICR |= I2C_ICR_ARLOCF;
+		I2C_BUS->ICR |= I2C_ICR_BERRCF;
+	}
 }
 
-I2C_Status I2C_class::read(uint8_t *buf, uint32_t nbytes, uint8_t SlaveAddress)
-{
-//	// Enable Acknowledgment
-//		I2Cx->CR1 |= I2C_CR1_ACK;
-//		// Clear POS flag
-//		I2Cx->CR1 &= ~I2C_CR1_POS; // NACK position current
-//
-//		// Initiate START sequence
-//		I2Cx->CR2 |= I2C_CR2_START;
-//		// Wait for EV5
-//		if (waitEvent(I2Cx,I2C_EVENT_EV5) == I2C_ERROR) return I2C_ERROR;
-//
-//		// Send the slave address (EV5)
-//		I2Cx->TXDR = SlaveAddress | (0x00FE); // Last bit set (receiver mode)
-//
-//		// Wait for EV6
-//		if (waitFlagSet(I2Cx,I2C_F_ADDR) == I2C_ERROR) return I2C_ERROR;
-//
-//		// There are can be three cases:
-//		//   read 1 byte
-//		//   read 2 bytes
-//		//   read more than 2 bytes
-//		if (nbytes == 1) {
-//			// Receive 1 byte (AN2824 figure 2)
-//			I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_ACK); // Disable I2C acknowledgment
-//
-//			// EV6_1 must be atomic operation (AN2824)
-//			__disable_irq();
-//			(void)I2Cx->SR1; // Clear ADDR bit
-//			(void)I2Cx->SR2;
-//			I2Cx->CR2 |= I2C_CR2_STOP; // Generate a STOP condition
-//			__enable_irq();
-//
-//			// Wait for RxNE flag (receive buffer not empty) EV7
-//			if (waitFlagSet(I2Cx,I2C_F_RXNE) == I2C_ERROR) return I2C_ERROR;
-//
-//			// Read received byte
-//			*buf = (uint8_t)I2Cx->RXDR;
-//		} else if (nbytes == 2) {
-//			// Receive 2 bytes (AN2824 figure 2)
-//			I2Cx->CR1 |= I2C_CR1_POS; // Set POS flag (NACK position next)
-//
-//			// EV6_1 must be atomic operation (AN2824)
-//			__disable_irq();
-//			(void)I2Cx->SR2; // Clear ADDR bit
-//			I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_ACK); // Disable I2C acknowledgment
-//			__enable_irq();
-//
-//			// Wait for BTF flag set (byte transfer finished) EV7_3
-//			if (waitFlagSet(I2Cx,I2C_F_BTF) == I2C_ERROR) return I2C_ERROR;
-//
-//			// This should be atomic operation
-//			__disable_irq();
-//			// Generate a STOP condition
-//			I2Cx->CR1 |= I2C_CR1_STOP;
-//			// Read first received byte
-//			*buf++ = (uint8_t)I2Cx->DR;
-//			__enable_irq();
-//
-//			// Read second received byte
-//			*buf = (uint8_t)I2Cx->DR;
-//		} else {
-//			// Receive more than 2 bytes (AN2824 figure 1)
-//			(void)I2Cx->SR2; // Clear ADDR bit
-//
-//			// Read received bytes into buffer
-//			while (nbytes-- != 3) {
-//				// Wait for BTF (cannot guarantee 1 transfer completion time)
-//				if (waitFlagSet(I2Cx,I2C_F_BTF) == I2C_ERROR) return I2C_ERROR;
-//				*buf++ = (uint8_t)I2Cx->DR;
-//			}
-//
-//			// Wait for BTF flag set (byte transfer finished) EV7_2
-//			if (waitFlagSet(I2Cx,I2C_F_BTF) == I2C_ERROR) return I2C_ERROR;
-//
-//			// Disable the I2C acknowledgment
-//			I2Cx->CR1 &= (uint16_t)~((uint16_t)I2C_CR1_ACK);
-//
-//			__disable_irq();
-//			// Read received byte N-2
-//			*buf++ = (uint8_t)I2Cx->RXDR;
-//			// Generate a STOP condition
-//			I2Cx->CR1 |= I2C_CR1_STOP;
-//			__enable_irq();
-//
-//			// Read received byte N-1
-//			*buf++ = I2Cx->RXDR;
-//
-//			// Wait for last byte received
-//			if (waitEvent(I2Cx,I2C_EVENT_EV7) == I2C_ERROR) return I2C_ERROR;
-//
-//			// Read last received byte
-//			*buf = (uint8_t)I2Cx->RXDR;
-//		}
-//
-//		// Wait for a STOP flag
-//		if (waitFlagReset(I2Cx,I2C_F_STOPF) == I2C_ERROR) return I2C_ERROR;
-//
+/*
+ Выполняет транзакцию записи Size байт в регистр Register по адресу Adress.
+ Параметры:
+ Adress - адрес ведомого устройства
+ Register - регистр, в который хотим передать данные
+ Data - указывает откуда брать данные для передачи
+ Size - сколько байт хотим передать (от 1 до 254)
+ Возвращает:
+ 1 - если данные успешно переданы
+ 0 - если произошла ошибка
+ */
+I2C_Status I2C_class::write(uint8_t addr, uint8_t reg, uint8_t *data,
+		uint8_t size) {
+	uint8_t Count = 0;	// Счётчик успешно переданных байт
+	// Старт
+	startDirectionAdressSize(I2C_Transmitter, addr, 1 + size);
+	// Сейчас либо I2C запросит первый байт для отправки,
+	// Либо взлетит NACK-флаг, говорящий о том, что микросхема не отвечает.
+	// Если взлетит NACK-флаг, отправку прекращаем.
+	while ((((I2C_BUS->ISR & I2C_ISR_TXIS) == 0)
+			&& ((I2C_BUS->ISR & I2C_ISR_NACKF) == 0))
+			&& (I2C_BUS->ISR & I2C_ISR_BUSY)) {
+	};
+	if (I2C_BUS->ISR & I2C_ISR_TXIS)
+		I2C_BUS->TXDR = reg;	// Отправляю адрес регистра
+
+	// Отправляем байты до тех пор, пока не взлетит TC-флаг.
+	// Если взлетит NACK-флаг, отправку прекращаем.
+	while ((((I2C_BUS->ISR & I2C_ISR_TC) == 0)
+			&& ((I2C_BUS->ISR & I2C_ISR_NACKF) == 0))
+			&& (I2C_BUS->ISR & I2C_ISR_BUSY)) {
+		if (I2C_BUS->ISR & I2C_ISR_TXIS)
+			I2C_BUS->TXDR = *(data + Count++);	// Отправляю данные
+	}
+	stop();
+	if (Count == size)
 		return I2C_SUCCESS;
+	return I2C_ERROR;
 }
 
-I2C_class I2C = I2C_class(I2C1);
+/*
+ Выполняет транзакцию чтения Size байт из регистра Register по адресу Adress.
+ Параметры:
+ Adress - адрес ведомого устройства
+ Register - регистр, из которого хотим принять данные
+ Data - указывает куда складывать принятые данные
+ Size - сколько байт хотим принять (от 1 до 255)
+ Возвращает:
+ 1 - если данные успешно приняты
+ 0 - если произошла ошибка
+ */
+I2C_Status I2C_class::read(uint8_t addr, uint8_t reg, uint8_t *data,
+		uint8_t size) {
+	uint8_t Count = 0;	// Счётчик успешно принятых байт
+	// Старт
+	startDirectionAdressSize(I2C_Transmitter, addr, 1);
+	// Сейчас либо I2C запросит первый байт для отправки,
+	// Либо взлетит NACK-флаг, говорящий о том, что микросхема не отвечает.
+	// Если взлетит NACK-флаг, отправку прекращаем.
+	while ((((I2C_BUS->ISR & I2C_ISR_TC) == 0)
+			&& ((I2C_BUS->ISR & I2C_ISR_NACKF) == 0))
+			&& (I2C_BUS->ISR & I2C_ISR_BUSY)) {
+		if (I2C_BUS->ISR & I2C_ISR_TXIS)
+			I2C_BUS->TXDR = reg;	// Отправляю адрес регистра
+	}
+	// Повторный старт
+	startDirectionAdressSize(I2C_Receiver, addr, size);
+	// Принимаем байты до тех пор, пока не взлетит TC-флаг.
+	// Если взлетит NACK-флаг, приём прекращаем.
+	while ((((I2C_BUS->ISR & I2C_ISR_TC) == 0)
+			&& ((I2C_BUS->ISR & I2C_ISR_NACKF) == 0))
+			&& (I2C_BUS->ISR & I2C_ISR_BUSY)) {
+		if (I2C_BUS->ISR & I2C_ISR_RXNE)
+			*(data + Count++) = I2C_BUS->RXDR;	// Принимаю данные
+	}
+	stop();
+	if (Count == size)
+		return I2C_SUCCESS;
+	return I2C_ERROR;
+}
+
+I2C_class I2C = I2C_class();
 } /* namespace HAL */
