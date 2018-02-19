@@ -1,10 +1,10 @@
 /*
  * encoder.cpp
  *
- *  Created on: 30 янв. 2018 г.
+ *  Created on: 30 пїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
-// TODO Проверить методы
+// TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 #include <HAL/Encoder.h>
 
 extern "C" void EXTI0_1_IRQHandler() {
@@ -22,28 +22,50 @@ extern "C" void EXTI0_1_IRQHandler() {
 	EXTI->PR |= EXTI_PR_PR0 | EXTI_PR_PR1;
 }
 
-volatile static uint8_t sw_pr_time;
-
 #define BUTTON_PRESSED 0
+volatile static uint8_t oldState = 0;
+volatile static bool longPressDetected = false;
+volatile static uint16_t pressedPeriods = 0;
+#define BUTTON_PERIOD 100
+#define BUTTON_SHORT_PERIOD 500
+#define BUTTON_LONG_PERIOD 5000
 extern "C" void TIM14_IRQHandler() {
-	volatile static uint8_t old_state;
-	uint8_t sw_state = HAL::GPIO::readInputDataBit(GPIOA, GPIO_IDR_0);
-	if (sw_state != BUTTON_PRESSED) {
-		if (old_state != BUTTON_PRESSED)
-			sw_pr_time++;
-		else
-			sw_pr_time = 0;
-	} else {
-		if (old_state != BUTTON_PRESSED) {
-			if (sw_pr_time < 50) {
+	uint8_t newState = HAL::GPIO::readInputDataBit(GPIOA, GPIO_IDR_0);
+
+	if (oldState == BUTTON_PRESSED) {
+		if (pressedPeriods * BUTTON_PERIOD > BUTTON_LONG_PERIOD) {
+			if (longPressDetected) {
+				if (newState != BUTTON_PRESSED) {
+					pressedPeriods = 0;
+					longPressDetected = false;
+				}
+			} else {
+				HAL::Encoder.longPres = true;
+				HAL::Encoder.pres = false;
+				longPressDetected = true;
+			}
+		} else if (newState != BUTTON_PRESSED) {
+			if (pressedPeriods * BUTTON_PERIOD > BUTTON_SHORT_PERIOD) {
 				HAL::Encoder.pres = true;
+				HAL::Encoder.longPres = false;
+				pressedPeriods = 0;
 			} else {
 				HAL::Encoder.pres = false;
-				HAL::Encoder.longPres = true;
+				HAL::Encoder.longPres = false;
+				pressedPeriods = 0;
 			}
+		} else if (newState == BUTTON_PRESSED) {
+			pressedPeriods++;
+		}
+	} else {
+		if (newState == BUTTON_PRESSED) {
+			pressedPeriods = 0;
+		} else {
+			//DO nothing
 		}
 	}
-	old_state = sw_state;
+
+	oldState = newState;
 	TIM14->SR &= ~0xFFFF;
 
 }
