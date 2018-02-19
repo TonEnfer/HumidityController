@@ -21,5 +21,16 @@ void GPIO::pinAFConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_PinSource,
 	GPIOx->AFR[GPIO_PinSource >> 0x03] = temp_2;
 }
 
+uint8_t GPIO::readInputDataBit(GPIO_TypeDef* GPIOx,
+			uint16_t GPIO_Pin) {
+		uint8_t bitstatus = 0x00;
+		if ((GPIOx->IDR & GPIO_Pin) != (uint32_t) 0) {
+			bitstatus = (uint8_t) 1;
+		} else {
+			bitstatus = (uint8_t) 0;
+		}
+		return bitstatus;
+	}
+
 }
 /* namespace HAL */

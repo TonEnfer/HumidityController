@@ -14,6 +14,8 @@ class GPIO {
 public:
 	static void pinAFConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_PinSource,
 			uint8_t GPIO_AF);
+	static uint8_t readInputDataBit(GPIO_TypeDef* GPIOx,
+			uint16_t GPIO_Pin);
 };
 
 } /* namespace HAL */

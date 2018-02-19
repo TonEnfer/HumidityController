@@ -9,6 +9,7 @@
 #define ENCODER_H_
 
 #include <main.h>
+#include <HAL/Drivers/GPIO.h>
 #include <delay.h>
 
 namespace HAL {
