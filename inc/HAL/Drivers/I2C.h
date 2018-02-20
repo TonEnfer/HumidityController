@@ -43,10 +43,8 @@ private:
 			uint8_t Size);
 public:
 	void init(void);
-	I2C_Status write(uint8_t addr, uint8_t reg, uint8_t *data,
-			uint8_t size);
-	I2C_Status read(uint8_t addr, uint8_t reg, uint8_t *data,
-			uint8_t size);
+	I2C_Status write(uint8_t addr, uint8_t *data, uint8_t size);
+	I2C_Status read(uint8_t addr, uint8_t *data, uint8_t size);
 };
 extern I2C_class I2C;
 }/* namespace HAL */

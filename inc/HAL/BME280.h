@@ -8,10 +8,9 @@
 #ifndef BME280_H_
 #define BME280_H_
 
-#include <main.h>
-#include <HAL/Sensor.h>
 #include <HAL/Drivers/I2C.h>
-#include <delay.h>
+#include <HAL/Sensor.h>
+#include <sys/_stdint.h>
 
 // All possible I2C device address values
 #define BME280_ADDR_G                   (uint8_t)0x76 // I2C address when SDO connected to GND
@@ -144,6 +143,7 @@ public:
 	}
 private:
 	inline void writeReg(uint8_t reg, uint8_t value);
+	I2C_Status readReg(uint8_t reg, uint8_t* value, uint8_t size);
 	uint8_t readReg(uint8_t reg);
 
 	BME280_RESULT check(void);
@@ -166,7 +166,7 @@ private:
 	BME280_RESULT readUH(int32_t *UH);
 	BME280_RESULT readUTPH(int32_t *UT, int32_t *UP, int32_t *UH);
 
-	int32_t  calcT(int32_t UT);
+	int32_t calcT(int32_t UT);
 	uint32_t calcP(int32_t UP);
 	uint32_t calcH(int32_t UH);
 
