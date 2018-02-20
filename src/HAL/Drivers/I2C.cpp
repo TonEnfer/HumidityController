@@ -6,6 +6,8 @@
  */
 
 #include <HAL/Drivers/I2C.h>
+#include <stm32f0xx.h>
+#include <sys/_stdint.h>
 
 namespace HAL {
 
@@ -47,7 +49,7 @@ void I2C_class::init(void) {
 
 void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
 		uint8_t Adress, uint8_t Size) {
-	Display.count(2);
+	Display.show(2);
 
 	if (Direction)
 		I2C_BUS->CR2 |= I2C_CR2_RD_WRN;
@@ -64,7 +66,7 @@ void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
 }
 
 void I2C_class::stop(void) {
-	Display.count(3);
+	Display.show(3);
 	I2C_BUS->CR2 |= I2C_CR2_STOP;
 	while (I2C_BUS->ISR & I2C_ISR_BUSY)
 		;

@@ -6,6 +6,10 @@
  */
 
 #include <HAL/LedDisplay.h>
+#include <stm32f0xx.h>
+#include <sys/_stdint.h>
+#include <system_stm32f0xx.h>
+
 volatile static uint8_t currentNumber;
 extern "C" void TIM3_IRQHandler() {
 	;
@@ -51,7 +55,7 @@ void LedDisplay::init() {
 
 	RCC->APB1ENR |= RCC_APB1ENR_TIM3EN;
 	TIM3->DIER |= TIM_DIER_UIE;
-	TIM3->PSC = (uint16_t) (SystemCoreClock/6000000); //6MHz
+	TIM3->PSC = (uint16_t) (SystemCoreClock / 6000000); //6MHz
 	TIM3->ARR = (uint16_t) 0x4F00; // ~11ms
 	TIM3->EGR |= TIM_EGR_UG;
 	TIM3->CR1 |= TIM_CR1_ARPE | TIM_CR1_URS | TIM_CR1_CEN;
@@ -61,7 +65,7 @@ void LedDisplay::init() {
 
 }
 
-void LedDisplay::count(uint8_t number) {
+void LedDisplay::show(uint8_t number) {
 	if (number >= 99) {
 		numbers[0] = numArray[9];
 		numbers[1] = numArray[9];
@@ -75,7 +79,7 @@ void LedDisplay::count(uint8_t number) {
 }
 
 void LedDisplay::off() {
-	this->count(100);
+	this->show(100);
 }
 LedDisplay Display = LedDisplay();
 }

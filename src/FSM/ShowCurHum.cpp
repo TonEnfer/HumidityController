@@ -28,7 +28,7 @@ FsmNode& ShowCurrentHumidity::NodeSwitchFunction(void) {
 		editTime.setCallbackNode(&curTime);
 		return editTime;
 	}
-	HAL::Display.count(Settings::Parameters.getCurHumidity());
+	HAL::Display.show(Settings::Parameters.getCurHumidity());
 	HAL::Out.autoSwitch();
 
 	return *this;

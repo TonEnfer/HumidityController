@@ -31,7 +31,7 @@ protected:
 public:
 	LedDisplay();
 	void init();
-	void count(uint8_t);
+	void show(uint8_t);
 	void off();
 	volatile uint16_t numbers[2] = {0,0};
 	volatile uint8_t curNum = 0;

@@ -26,7 +26,7 @@ FsmNode& ShowCurrentTime::NodeSwitchFunction(void) {
 	}
 	uint8_t ct = (uint8_t)(Settings::Parameters.getNodeShowTime()/60);
 	if (ct != 0) {
-		HAL::Display.count(ct);
+		HAL::Display.show(ct);
 		HAL::Out.on();
 	} else
 		return ShowCurrentHumidity::getInstance();

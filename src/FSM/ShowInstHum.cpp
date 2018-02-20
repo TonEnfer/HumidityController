@@ -24,7 +24,7 @@ FsmNode& ShowInstalledHumidity::NodeSwitchFunction(void) {
 		editInstallHum.setCallbackNode(this);
 		return editInstallHum;
 	} else {
-		HAL::Display.count(Settings::Parameters.getMaxHumidity());
+		HAL::Display.show(Settings::Parameters.getMaxHumidity());
 	}
 	return *this;
 }
