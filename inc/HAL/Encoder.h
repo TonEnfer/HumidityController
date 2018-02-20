@@ -1,7 +1,7 @@
 /*
  * encoder.h
  *
- *  Created on: 30 ÿíâ. 2018 ã.
+ *  Created on: 30 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: anton.samoylov
  */
 
@@ -19,13 +19,13 @@ public:
 	void init();
 	bool isPressed();
 	bool isLongPressed();
-	bool isRotate();
+	bool isRotated();
 	int getPosition();
 
-	bool pres = false;
-	bool longPres = false;
-	bool rotation = false;
-	int32_t position = 0;
+	volatile bool pres = false;
+	volatile bool longPres = false;
+	volatile bool rotation = false;
+	volatile int32_t position = 0;
 
 private:
 

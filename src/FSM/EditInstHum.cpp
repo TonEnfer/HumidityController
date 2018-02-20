@@ -1,15 +1,28 @@
 /*
  * EditInstHum.cpp
  *
- *  Created on: 1 февр. 2018 г.
+ *  Created on: 1 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
 #include <FSM/EditInstHum.h>
 namespace FSM {
 void EditInstalledHumidity::NodeEnterFunction(void) {
-	uint8_t newHum = Parameters.normalize(
-			Parameters.getMaxHumidity() + HAL::Encoder.getPosition());
+	int32_t pos = HAL::Encoder.getPosition();
+	uint8_t newHum = 0;
+	int8_t q;
+	if (abs(pos) < 10) {
+		if (pos < 0)
+			q = -1;
+		else
+			q = 1;
+	} else {
+		if (pos > 0)
+			q = -10;
+		else
+			q = 10;
+	}
+	newHum = Parameters.normalize(Parameters.getMaxHumidity() + q);
 	Parameters.setMaxHumidity(newHum);
 
 }

@@ -1,7 +1,7 @@
 /*
  * ShowInstHum.cpp
  *
- *  Created on: 1 февр. 2018 г.
+ *  Created on: 1 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
@@ -20,11 +20,11 @@ FsmNode& ShowInstalledHumidity::NodeSwitchFunction(void) {
 	if (Settings::Parameters.getNodeShowTime() == 0) {
 		stopCountingShowTime();
 		return ShowCurrentHumidity::getInstance();
-	} else if (HAL::Encoder.isRotate()) {
+	} else if (HAL::Encoder.isRotated()) {
 		editInstallHum.setCallbackNode(this);
 		return editInstallHum;
 	} else {
-		HAL::Display.show(Settings::Parameters.getMaxHumidity());
+		HAL::Display.count(Settings::Parameters.getMaxHumidity());
 	}
 	return *this;
 }

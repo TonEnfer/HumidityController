@@ -1,7 +1,7 @@
 /*
  * FsmNode.cpp
  *
- *  Created on: 17 февр. 2018 г.
+ *  Created on: 17 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
@@ -17,7 +17,7 @@ namespace FSM {
 void FsmNode::startTimer() {
 	RCC->APB2ENR |= RCC_APB2ENR_TIM16EN;
 	TIM16->DIER |= TIM_DIER_UIE;
-	TIM16->PSC = (uint16_t) 32000; //1500 Hz
+	TIM16->PSC = (uint16_t) (SystemCoreClock/1500); //1500 Hz
 	TIM16->ARR = (uint16_t) 1500; //3 s
 	TIM16->CNT = (uint16_t) 0; //Reset count val
 	TIM16->EGR |= TIM_EGR_UG; //UPDATE auto-reload value;

@@ -1,7 +1,7 @@
 /*
  * LedDisplay.h
  *
- *  Created on: 30 ÿíâ. 2018 ã.
+ *  Created on: 30 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: anton.samoylov
  */
 
@@ -31,11 +31,11 @@ protected:
 public:
 	LedDisplay();
 	void init();
-	void show(uint8_t);
+	void count(uint8_t);
 	void off();
-	uint16_t numbers[2] = {0,0};
-	uint8_t curNum = 0;
-	uint32_t clearmask = (uint32_t)0b0000011101110<<16;
+	volatile uint16_t numbers[2] = {0,0};
+	volatile uint8_t curNum = 0;
+	volatile uint32_t clearmask = (uint32_t)0b10000011101110<<16;
 };
 extern LedDisplay Display;
 }

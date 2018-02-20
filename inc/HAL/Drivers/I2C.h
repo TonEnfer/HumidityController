@@ -1,7 +1,7 @@
 /*
  * I2Cclass.h
  *
- *  Created on: 6 февр. 2018 г.
+ *  Created on: 6 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 //TODO include stm32f0xx.h, stm32f0xx_rcc.h, stm32f0xx_gpio.h
@@ -10,6 +10,7 @@
 
 #include <main.h>
 #include <HAL/Drivers/GPIO.h>
+#include <HAL/LedDisplay.h>
 
 namespace HAL {
 

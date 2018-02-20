@@ -1,7 +1,7 @@
 /*
  * BME280.h
  *
- *  Created on: 30 ÿíâ. 2018 ã.
+ *  Created on: 30 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: anton.samoylov
  */
 
@@ -18,7 +18,7 @@
 #define BME280_ADDR_V                   (uint8_t)0x77 // I2C address when SDO connected to VDDIO
 
 // BME280 address
-#define BME280_ADDR                     (BME280_ADDR_V << 1)
+#define BME280_ADDR                     (BME280_ADDR_G << 1)
 
 // BME280 registers
 #define BME280_REG_CALIB00              (uint8_t)0x88 // Calibration data calib00

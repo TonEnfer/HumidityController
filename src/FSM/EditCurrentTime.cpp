@@ -1,7 +1,7 @@
 /*
  * EditInstTime.cpp
  *
- *  Created on: 1 февр. 2018 г.
+ *  Created on: 1 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 

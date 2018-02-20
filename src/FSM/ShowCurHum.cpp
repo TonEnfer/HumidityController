@@ -1,7 +1,7 @@
 /*
  * ShowHum.cpp
  *
- *  Created on: 31 ÿíâ. 2018 ã.
+ *  Created on: 31 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: anton.samoylov
  */
 
@@ -24,11 +24,11 @@ FsmNode& ShowCurrentHumidity::NodeSwitchFunction(void) {
 		return (ShowInstalledHumidity::getInstance());
 	else if (HAL::Encoder.isPressed())
 		return (curTime);
-	else if (HAL::Encoder.isRotate()) {
+	else if (HAL::Encoder.isRotated()) {
 		editTime.setCallbackNode(&curTime);
 		return editTime;
 	}
-	HAL::Display.show(Settings::Parameters.getCurHumidity());
+	HAL::Display.count(Settings::Parameters.getCurHumidity());
 	HAL::Out.autoSwitch();
 
 	return *this;

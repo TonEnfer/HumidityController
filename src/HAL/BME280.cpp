@@ -13,6 +13,7 @@ BME280::BME280() {
 	t_fine = 0x80000;
 }
 void BME280::init() {
+	I2C.init();
 	reset();
 	delay_ms(5);
 //	setStandby(BME280_STBY_1s); // Set normal mode inactive duration (standby time)
@@ -43,8 +44,7 @@ uint16_t BME280::getTemperature() {
 //   reg - register number
 //   value - new register value
 void BME280::writeReg(uint8_t reg, uint8_t value) {
-	uint8_t val[1] = { value };
-	HAL::I2C.write(BME280_ADDR, reg, val, 1);
+	HAL::I2C.write(BME280_ADDR, reg, &value, 1);
 }
 
 // Read BME280 register

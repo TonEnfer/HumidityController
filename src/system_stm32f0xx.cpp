@@ -1,7 +1,7 @@
 /*
  * system.cpp
  *
- *  Created on: 18 февр. 2018 г.
+ *  Created on: 18 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
@@ -59,21 +59,20 @@ void SystemInit() {
 	RCC->CFGR |= (uint32_t) RCC_CFGR_HPRE_DIV1;
 	/* PCLK1 = HCLK */
 	RCC->CFGR |= (uint32_t) RCC_CFGR_PPRE_DIV1;
-	//Сбрасываем настройки PLL
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PLL
 	RCC->CFGR &= (uint32_t) ((uint32_t) ~(RCC_CFGR_PLLSRC | RCC_CFGR_PLLXTPRE
 			| RCC_CFGR_PLLMUL));
-	/*Устанавливаем источник PLL = HSI/2 и PLL Mul = 12*/
+	/*пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PLL = HSI/2 пїЅ PLL Mul = 12*/
 	RCC->CFGR |= (uint32_t) (RCC_CFGR_PLLSRC_HSI_DIV2 | RCC_CFGR_PLLMUL12);
-	/* Включаем PLL */
+	/* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PLL */
 	RCC->CR |= RCC_CR_PLLON;
-	//Ждём готовности PLL
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PLL
 	while ((RCC->CR & RCC_CR_PLLRDY) == 0) {
 	}
-	//Устанавливаем PLL в качестве источника тактирования
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ PLL пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	RCC->CFGR &= (uint32_t) ((uint32_t) ~(RCC_CFGR_SW));
 	RCC->CFGR |= (uint32_t) RCC_CFGR_SW_PLL;
-	//Ждём готовности
+	//пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	while ((RCC->CFGR & (uint32_t) RCC_CFGR_SWS) != (uint32_t) 0x08) {
 	}
-	SystemCoreClockUpdate();
 }
