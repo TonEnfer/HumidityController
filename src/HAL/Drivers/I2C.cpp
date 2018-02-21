@@ -11,54 +11,56 @@
 
 namespace HAL {
 
-/*
- ��������� ��������� ��������� ����.
- ����������� �����, �������������� �������.
- ����������� �������� ��� ������ ����.
- */
-
 void I2C_class::init(void) {
 	RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
-	RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;		// ������� ������������ I2C
-	// ��������� ��� PB6, PB7
-	GPIOA->MODER |= GPIO_MODER_MODER9_1 | GPIO_MODER_MODER10_1;	// ����� �������������� �������
-	GPIOA->OTYPER |= GPIO_OTYPER_OT_9 | GPIO_OTYPER_OT_10;// �������� ���������
-	GPIOA->OSPEEDR |= GPIO_OSPEEDR_OSPEEDR9 | GPIO_OSPEEDR_OSPEEDR10;// ������������ ��������
-	GPIOA->PUPDR |= GPIO_PUPDR_PUPDR9_0 | GPIO_PUPDR_PUPDR10_0;
-	// ����� �������������� �������
-	HAL::GPIO::pinAFConfig(GPIOA, 9, 1);	// I2C1_SCL
-	HAL::GPIO::pinAFConfig(GPIOA, 10, 1);	// I2C1_SDA
+	RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
 
-	I2C_BUS->CR1 &= ~I2C_CR1_PE;			// �������� I2C
+	GPIOA->MODER |= GPIO_MODER_MODER9_1 | GPIO_MODER_MODER10_1;	// Alternative function
+	GPIOA->OTYPER |= GPIO_OTYPER_OT_9 | GPIO_OTYPER_OT_10;	// open drain
+	GPIOA->OSPEEDR |= GPIO_OSPEEDR_OSPEEDR9_0 | GPIO_OSPEEDR_OSPEEDR9_1
+			| GPIO_OSPEEDR_OSPEEDR10_0 | GPIO_OSPEEDR_OSPEEDR10_1;	// max speed
+	GPIOA->PUPDR |= GPIO_PUPDR_PUPDR9_0 | GPIO_PUPDR_PUPDR10_0; //pull up
+
+	HAL::GPIO::pinAFConfig(GPIOA, 9, 4);	// I2C1_SCL
+	HAL::GPIO::pinAFConfig(GPIOA, 10, 4);	// I2C1_SDA
+
+	I2C_BUS->CR1 |= I2C_CR1_SWRST;
+	I2C_BUS->CR1 &= I2C_CR1_SWRST;
+
+	I2C_BUS->CR1 &= ~I2C_CR1_PE;
 	while (I2C_BUS->CR1 & I2C_CR1_PE) {
-	};	// ��� ���� ����������
-
-	// ������� ������������ ������ I2C = 48 ���
-	// ������� ���� I2C = 100 kHz
-	// ���������� ��������
+	};
 	I2C_BUS->TIMINGR |= (0xB << I2C_OFFSET_TIMINGR_PRESC)
 			| (0x13 << I2C_OFFSET_TIMINGR_SCLL)
 			| (0xF << I2C_OFFSET_TIMINGR_SCLH)
 			| (0x4 << I2C_OFFSET_TIMINGR_SCLDEL)
 			| (0x2 << I2C_OFFSET_TIMINGR_SDADEL);
 
-	I2C_BUS->CR1 |= I2C_CR1_PE;					// ������� I2C
+	I2C_BUS->CR1 |= I2C_CR1_PE;
 	while ((I2C_BUS->CR1 & I2C_CR1_PE) == 0) {
-	};	// ��� ���� ���������
+	};
 }
 
 void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
 		uint8_t Adress, uint8_t Size) {
 	Display.show(2);
+	uint32_t tempreg = I2C_BUS->CR2;
 
 	if (Direction)
-		I2C_BUS->CR2 |= I2C_CR2_RD_WRN;
+		tempreg |= I2C_CR2_RD_WRN;
 	else
-		I2C_BUS->CR2 &= ~I2C_CR2_RD_WRN;
-	I2C_BUS->CR2 &= ~I2C_CR2_NBYTES;
-	I2C_BUS->CR2 |= Size << I2C_OFFSET_CR2_NBYTES;
-	I2C_BUS->CR2 &= ~I2C_CR2_SADD;
-	I2C_BUS->CR2 |= Adress;
+		tempreg &= ~I2C_CR2_RD_WRN;
+
+	tempreg |= I2C_CR2_AUTOEND;
+	tempreg &= ~I2C_CR2_RELOAD;
+
+	tempreg &= ~I2C_CR2_NBYTES;
+	tempreg |= (Size << I2C_OFFSET_CR2_NBYTES) & I2C_CR2_NBYTES;
+
+	tempreg &= ~I2C_CR2_SADD;
+	tempreg |= (Adress & I2C_CR2_SADD);
+	I2C_BUS->CR2 = tempreg;
+
 	I2C_BUS->CR2 |= I2C_CR2_START;
 
 	while ((I2C_BUS->ISR & I2C_ISR_BUSY) == 0)
@@ -67,10 +69,13 @@ void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
 
 void I2C_class::stop(void) {
 	Display.show(3);
-	I2C_BUS->CR2 |= I2C_CR2_STOP;
-	while (I2C_BUS->ISR & I2C_ISR_BUSY)
-		;
-
+	if (!(I2C_BUS->ISR & I2C_ISR_STOPF)) {
+		//if no stop flag is present;
+		//making a stop condition
+		I2C_BUS->CR2 |= I2C_CR2_STOP;
+		while (I2C_BUS->ISR & I2C_ISR_BUSY)
+			;
+	}
 	I2C_BUS->ICR |= I2C_ICR_STOPCF;
 	I2C_BUS->ICR |= I2C_ICR_NACKCF;
 
@@ -81,16 +86,16 @@ void I2C_class::stop(void) {
 }
 
 I2C_Status I2C_class::write(uint8_t addr, uint8_t *data, uint8_t size) {
-	startDirectionAdressSize(I2C_Transmitter, addr, 1 + size);
+	while ((I2C_BUS->ISR & I2C_ISR_BUSY) == I2C_ISR_BUSY)
+		;
+	startDirectionAdressSize(I2C_Transmitter, addr, size);
 	for (uint8_t i = 0; i < size; i++) {
-		while ((I2C_BUS->ISR & I2C_ISR_TXIS) == 0) {
+		while ((I2C_BUS->ISR & I2C_ISR_TXIS) == 0) { //FIXME: MUST BE TXE?
 			if ((I2C_BUS->ISR & I2C_ISR_NACKF))
 				return I2C_ERROR;
 		};
 		I2C_BUS->TXDR = data[i];
 	}
-	if ((I2C_BUS->ISR & I2C_ISR_TC) != 0)
-		return I2C_ERROR;
 	stop();
 	return I2C_SUCCESS;
 }
@@ -98,12 +103,10 @@ I2C_Status I2C_class::write(uint8_t addr, uint8_t *data, uint8_t size) {
 I2C_Status I2C_class::read(uint8_t addr, uint8_t *data, uint8_t size) {
 	startDirectionAdressSize(I2C_Receiver, addr, size);
 	for (uint8_t i = 0; i < size; i++) {
-		while ((I2C_BUS->ISR & I2C_ISR_RXNE) != 1)
+		while ((I2C_BUS->ISR & I2C_ISR_RXNE) ==0)
 			;
-		*(data++) = I2C_BUS->RXDR;
+		data[i] = I2C_BUS->RXDR;
 	}
-	if ((I2C_BUS->ISR & I2C_ISR_TC) != 0)
-		return I2C_ERROR;
 	stop();
 	return I2C_SUCCESS;
 }
