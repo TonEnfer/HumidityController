@@ -84,7 +84,7 @@ I2C_Status I2C_class::write(uint8_t addr, uint8_t *data, uint8_t size) {
 	startDirectionAdressSize(I2C_Transmitter, addr, 1 + size);
 	for (uint8_t i = 0; i < size; i++) {
 		while ((I2C_BUS->ISR & I2C_ISR_TXIS) == 0) {
-			if ((I2C_BUS->ISR & I2C_ISR_NACKF) == 0)
+			if ((I2C_BUS->ISR & I2C_ISR_NACKF))
 				return I2C_ERROR;
 		};
 		I2C_BUS->TXDR = data[i];
