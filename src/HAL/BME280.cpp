@@ -25,6 +25,7 @@ void BME280::init() {
 
 	setMode(BME280_MODE_NORMAL); // Set normal mode (perpetual periodic conversion)
 
+	readCalibration();
 }
 
 uint16_t BME280::getHumidity() {
@@ -258,7 +259,7 @@ BME280_RESULT BME280::readUP(int32_t *UP) {
 //   BME280_ERROR in case of I2C timeout, BME280_SUCCESS otherwise
 // note: '0x80000' result means no data for temperature (measurement skipped or not ready yet)
 BME280_RESULT BME280::readUT(int32_t *UT) {
-	uint8_t buf[3];
+	uint8_t buf[3] = { 0 };
 	// Clear result value
 	*UT = 0x80000;
 	// Read the 'temp' register (_msb, _lsb, _xlsb)
