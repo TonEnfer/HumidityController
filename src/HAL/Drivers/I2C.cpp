@@ -48,8 +48,10 @@ void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
 
 	if (Direction)
 		tempreg |= I2C_CR2_RD_WRN;
-	else
+	else {
 		tempreg &= ~I2C_CR2_RD_WRN;
+		I2C_BUS->ISR |= I2C_ISR_TXE;
+	}
 
 	tempreg |= I2C_CR2_AUTOEND;
 	tempreg &= ~I2C_CR2_RELOAD;
@@ -90,12 +92,13 @@ I2C_Status I2C_class::write(uint8_t addr, uint8_t *data, uint8_t size) {
 		;
 	startDirectionAdressSize(I2C_Transmitter, addr, size);
 	for (uint8_t i = 0; i < size; i++) {
-		while ((I2C_BUS->ISR & I2C_ISR_TXIS) == 0) { //FIXME: MUST BE TXE?
+		while ((I2C_BUS->ISR & I2C_ISR_TXIS) == 0) {
 			if ((I2C_BUS->ISR & I2C_ISR_NACKF))
 				return I2C_ERROR;
 		};
 		I2C_BUS->TXDR = data[i];
 	}
+	while(I2C_BUS->ISR & I2C_ISR_TC);
 	stop();
 	return I2C_SUCCESS;
 }
@@ -103,10 +106,11 @@ I2C_Status I2C_class::write(uint8_t addr, uint8_t *data, uint8_t size) {
 I2C_Status I2C_class::read(uint8_t addr, uint8_t *data, uint8_t size) {
 	startDirectionAdressSize(I2C_Receiver, addr, size);
 	for (uint8_t i = 0; i < size; i++) {
-		while ((I2C_BUS->ISR & I2C_ISR_RXNE) ==0)
+		while ((I2C_BUS->ISR & I2C_ISR_RXNE) == 0)
 			;
 		data[i] = I2C_BUS->RXDR;
 	}
+	while(I2C_BUS->ISR & I2C_ISR_TC);
 	stop();
 	return I2C_SUCCESS;
 }
