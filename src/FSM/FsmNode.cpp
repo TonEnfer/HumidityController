@@ -8,7 +8,6 @@
 #include <FSM/FsmNode.h>
 #include <stm32f0xx.h>
 #include <sys/_stdint.h>
-#include <system_stm32f0xx.h>
 #include <Settings.h>
 
 extern "C" void TIM16_IRQHandler() {

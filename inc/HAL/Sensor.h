@@ -16,9 +16,6 @@ public:
 	virtual void init();
 	virtual uint16_t getHumidity();
 	virtual uint16_t getTemperature();
-protected:
-	~Sensor_class() {
-	}
 };
 //extern Sensor_class* Sensor;
 } /* namespace HAL */

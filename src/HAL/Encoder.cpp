@@ -8,7 +8,6 @@
 #include <HAL/Drivers/GPIO.h>
 #include <HAL/Encoder.h>
 #include <stm32f0xx.h>
-#include <system_stm32f0xx.h>
 
 extern "C" void EXTI0_1_IRQHandler() {
 	static uint8_t oldA, oldB;
@@ -110,7 +109,7 @@ void Encoder_class::init() {
 
 	RCC->APB1ENR |= RCC_APB1ENR_TIM14EN;
 	TIM14->DIER |= TIM_DIER_UIE;
-	TIM14->PSC = (uint16_t) (SystemCoreClock/375000)-1; //375 kHz
+	TIM14->PSC = (uint16_t) (SystemCoreClock / 375000) - 1; //375 kHz
 	TIM14->ARR = (uint16_t) 37500; //100 ms
 	TIM14->CNT = (uint16_t) 0; //Reset count val
 	TIM14->EGR |= TIM_EGR_UG; //UPDATE auto-reload value;
@@ -134,7 +133,7 @@ bool Encoder_class::isLongPressed() {
 }
 
 bool Encoder_class::isRotated() {
-	if(position != 0)
+	if (position != 0)
 		return true;
 	else
 		return false;

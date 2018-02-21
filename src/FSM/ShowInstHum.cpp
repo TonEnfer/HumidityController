@@ -18,9 +18,6 @@ void ShowInstalledHumidity::NodeEnterFunction(void) {
 	startCountingShowTime();
 }
 
-void ShowInstalledHumidity::NodeExitFunction(void) {
-}
-
 FsmNode& ShowInstalledHumidity::NodeSwitchFunction(void) {
 	FsmNode& editInstallHum = EditInstalledHumidity::getInstance();
 	if (Settings::Parameters.getNodeShowTime() == 0) {

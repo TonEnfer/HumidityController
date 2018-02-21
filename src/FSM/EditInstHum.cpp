@@ -9,7 +9,7 @@
 #include <HAL/Encoder.h>
 #include <sys/_stdint.h>
 #include <Settings.h>
-#include <cstdlib>
+#include <stdlib.h>
 
 using namespace Settings;
 namespace FSM {

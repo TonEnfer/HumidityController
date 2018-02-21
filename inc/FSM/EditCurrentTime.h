@@ -9,9 +9,9 @@
 #define EDITCURRENTTIME_H_
 
 #include <FSM/EndpointNode.h>
+
 namespace FSM {
 class EditCurrentTime: public EndpointNode {
-
 public:
 	void NodeEnterFunction(void);
 	static EditCurrentTime& getInstance() {

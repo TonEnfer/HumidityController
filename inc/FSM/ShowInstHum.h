@@ -18,7 +18,6 @@ public:
 		return h;
 	}
 	void NodeEnterFunction(void);
-	void NodeExitFunction(void);
 	FsmNode& NodeSwitchFunction(void);
 };
 }
