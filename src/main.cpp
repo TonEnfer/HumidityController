@@ -19,11 +19,10 @@ FSM::FinalStateMashine fsm;
 int main() {
 	SystemCoreClockUpdate();
 	fsm = FSM::FinalStateMashine();
-	//HAL::Display.init();
+	HAL::Display.init();
 	HAL::Sensor.init();
 	HAL::Encoder.init();
 	HAL::Out.init();
-
 
 	__enable_irq();
 

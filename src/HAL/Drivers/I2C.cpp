@@ -43,7 +43,7 @@ void I2C_class::init(void) {
 
 void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
 		uint8_t Adress, uint8_t Size) {
-	Display.show(2);
+
 	uint32_t tempreg = I2C_BUS->CR2;
 
 	if (Direction)
@@ -70,7 +70,7 @@ void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
 }
 
 void I2C_class::stop(void) {
-	Display.show(3);
+
 	if (!(I2C_BUS->ISR & I2C_ISR_STOPF)) {
 		//if no stop flag is present;
 		//making a stop condition
