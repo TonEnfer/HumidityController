@@ -1,23 +1,23 @@
 #pragma once
-#include <main.h>
-#include <HAL/Drivers/Flash.h>
+
+#include <sys/_stdint.h>
+
 namespace Settings {
 
-#define SETTINGS_START_ADDRESS ((uint32_t)0x08003C00) //Конец памяти. Страница 15, сектор 3.
+#define SETTINGS_START_ADDRESS ((uint32_t)0x08003C00) //пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 15, пїЅпїЅпїЅпїЅпїЅпїЅ 3.
 #define PAGE_SIZE ((uint32_t)0x400) //1 KByte
-#define SETTINGS_END_ADDRESS ((uint32_t)(SETTINGS_START_ADDRESS+(PAGE_SIZE-1)) //Последний адрес страницы (0x08003FFF)
+#define SETTINGS_END_ADDRESS ((uint32_t)(SETTINGS_START_ADDRESS+(PAGE_SIZE-1)) //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (0x08003FFF)
 
 typedef struct {
-	uint8_t maximumHumidity = 0;	//1 байт
+	uint8_t maximumHumidity = 0;	//1 пїЅпїЅпїЅпїЅ
 
 } savableParam_t;
 
-typedef struct
-{
-	uint32_t installedTime = 5;		//4 байт
-	uint32_t nodeShowTime = 5;		//4 байт
-	uint8_t currentHumidity = 0;	//1 байт
-									//3 - для выравнивания
+typedef struct {
+	uint32_t installedTime = 5;		//4 пїЅпїЅпїЅпїЅ
+	uint32_t nodeShowTime = 5;		//4 пїЅпїЅпїЅпїЅ
+	uint8_t currentHumidity = 0;	//1 пїЅпїЅпїЅпїЅ
+									//3 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 } notSavableParam_t;
 
 class Settings_class {

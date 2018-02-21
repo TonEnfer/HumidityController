@@ -1,11 +1,13 @@
 /*
  * FixNew.cpp
  *
- *  Created on: 2 февр. 2018 г.
+ *  Created on: 2 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
 #include <FixNew.h>
+#include <stdlib.h>
+
 void *operator new(size_t size) {
 	return malloc(size);
 }
@@ -22,4 +24,11 @@ void operator delete[](void *p) {
 	free(p);
 }
 
-
+void operator delete(void* p, unsigned int size) {
+	(void) (size);
+	free(p);
+}
+void operator delete [](void* p, unsigned int size) {
+	(void) (size);
+	free(p);
+}

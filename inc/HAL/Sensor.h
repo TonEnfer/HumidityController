@@ -1,25 +1,24 @@
 /*
  * Sensor.h
  *
- *  Created on: 2 февр. 2018 г.
+ *  Created on: 2 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 #ifndef SENSOR_H_
 #define SENSOR_H_
 
-#include <main.h>
+#include <sys/_stdint.h>
 
 namespace HAL {
 
 class Sensor_class {
 public:
-	//Sensor_class();
 	virtual void init();
 	virtual uint16_t getHumidity();
 	virtual uint16_t getTemperature();
-	virtual ~Sensor_class(){};
-private:
-
+protected:
+	~Sensor_class() {
+	}
 };
 //extern Sensor_class* Sensor;
 } /* namespace HAL */

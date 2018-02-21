@@ -1,17 +1,18 @@
 /*
  * FSM.cpp
  *
- *  Created on: 31 ÿíâ. 2018 ã.
+ *  Created on: 31 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: anton.samoylov
  */
 
 #include <FSM/FinalStateMashine.h>
+#include <FSM/ShowCurHum.h>
 
 namespace FSM {
 FsmNode* switchNode(FsmNode* current, FsmNode* next) {
-	if (current != NULL)
+	if (current != nullptr)
 		current->NodeExitFunction();
-	if (next != NULL)
+	if (next != nullptr)
 		next->NodeEnterFunction();
 	return next;
 }

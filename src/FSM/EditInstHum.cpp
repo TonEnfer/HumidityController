@@ -6,6 +6,12 @@
  */
 
 #include <FSM/EditInstHum.h>
+#include <HAL/Encoder.h>
+#include <sys/_stdint.h>
+#include <Settings.h>
+#include <cstdlib>
+
+using namespace Settings;
 namespace FSM {
 void EditInstalledHumidity::NodeEnterFunction(void) {
 	int32_t pos = HAL::Encoder.getPosition();

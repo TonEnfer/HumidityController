@@ -1,21 +1,17 @@
 /*
  * Output.h
  *
- *  Created on: 30 ÿíâ. 2018 ã.
+ *  Created on: 30 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: anton.samoylov
  */
 
 #ifndef OUTPUT_H_
 #define OUTPUT_H_
 
-#include <main.h>
-#include <Settings.h>
-
 namespace HAL {
 class Output {
 
 public:
-	Output();
 	void init();
 	void on();
 	void off();

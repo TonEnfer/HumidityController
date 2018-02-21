@@ -7,7 +7,6 @@
 
 #include <HAL/LedDisplay.h>
 #include <stm32f0xx.h>
-#include <sys/_stdint.h>
 #include <system_stm32f0xx.h>
 
 volatile static uint8_t currentNumber;

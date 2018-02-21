@@ -5,14 +5,16 @@
  *      Author: anton.samoylov
  */
 
-#include <main.h>
-
+#include <delay.h>
 #include <FSM/FinalStateMashine.h>
-#include <Settings.h>
 #include <HAL/BME280.h>
+#include <HAL/Encoder.h>
 #include <HAL/LedDisplay.h>
 #include <HAL/Output.h>
-#include <HAL/Encoder.h>
+#include <main.h>
+#include <sys/_stdint.h>
+#include <system_stm32f0xx.h>
+#include <Settings.h>
 
 FSM::FinalStateMashine fsm;
 
@@ -24,13 +26,14 @@ int main() {
 	HAL::Encoder.init();
 	HAL::Out.init();
 
-	__enable_irq();
-
+	while (true) {
+		volatile uint16_t temperature = HAL::Sensor.getTemperature();
+		HAL::Display.show((uint8_t) temperature);
+	}
 	while (true) {
 		fsm.run();
 		Settings::Parameters.setCurHumidity(HAL::Sensor.getHumidity());
 		delay_us(100);
 	}
-
 	return 0;
 }

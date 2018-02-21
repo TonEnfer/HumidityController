@@ -1,22 +1,17 @@
 /*
  * FSM.h
  *
- *  Created on: 31 ÿíâ. 2018 ã.
+ *  Created on: 31 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: anton.samoylov
  */
 
 #ifndef FINALSTATEMASHINE_H_
 #define FINALSTATEMASHINE_H_
 
-#include <main.h>
-
-#include <FSM/EditCurrentTime.h>
-#include <FSM/ShowCurHum.h>
-#include <FSM/ShowInstHum.h>
-#include <FSM/EditInstHum.h>
-#include <FSM/ShowCurrentTime.h>
+#include <FSM/FsmNode.h>
 
 namespace FSM {
+
 class FinalStateMashine {
 private:
 	FsmNode* current;

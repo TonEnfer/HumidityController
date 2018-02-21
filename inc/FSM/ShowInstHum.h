@@ -1,28 +1,17 @@
 /*
  * ShowInstHum.h
  *
- *  Created on: 1 февр. 2018 г.
+ *  Created on: 1 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
 #ifndef SHOWINSTHUM_H_
 #define SHOWINSTHUM_H_
 
-#include <main.h>
 #include <FSM/FsmNode.h>
-#include <FSM/EditInstHum.h>
-#include <FSM/ShowCurHum.h>
-#include <HAL/Encoder.h>
-#include <Settings.h>
 
 namespace FSM {
 class ShowInstalledHumidity: public FsmNode {
-private:
-	ShowInstalledHumidity() {
-	}
-	~ShowInstalledHumidity() {
-	}
-
 public:
 	static ShowInstalledHumidity& getInstance() {
 		static ShowInstalledHumidity h;

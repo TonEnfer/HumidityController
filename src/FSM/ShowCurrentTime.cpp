@@ -5,7 +5,15 @@
  *      Author: anton.samoylov
  */
 
+#include <FSM/EditCurrentTime.h>
+#include <FSM/ShowCurHum.h>
 #include <FSM/ShowCurrentTime.h>
+#include <HAL/Encoder.h>
+#include <HAL/LedDisplay.h>
+#include <HAL/Output.h>
+#include <sys/_stdint.h>
+#include <Settings.h>
+
 namespace FSM {
 void ShowCurrentTime::NodeEnterFunction(void) {
 	uint32_t ct = Settings::Parameters.getInsTime();
@@ -21,10 +29,10 @@ FsmNode& ShowCurrentTime::NodeSwitchFunction(void) {
 		EditCurTime.setCallbackNode(this);
 		return EditCurTime;
 	}
-	if(HAL::Encoder.isPressed()){
+	if (HAL::Encoder.isPressed()) {
 		return ShowCurrentHumidity::getInstance();
 	}
-	uint8_t ct = (uint8_t)(Settings::Parameters.getNodeShowTime()/60);
+	uint8_t ct = (uint8_t) (Settings::Parameters.getNodeShowTime() / 60);
 	if (ct != 0) {
 		HAL::Display.show(ct);
 		HAL::Out.on();

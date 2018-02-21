@@ -5,9 +5,9 @@
  *      Author: anton.samoylov
  */
 
+#include <HAL/Drivers/GPIO.h>
 #include <HAL/Drivers/I2C.h>
 #include <stm32f0xx.h>
-#include <sys/_stdint.h>
 
 namespace HAL {
 
@@ -64,9 +64,6 @@ void I2C_class::startDirectionAdressSize(I2C_Direction Direction,
 	I2C_BUS->CR2 = tempreg;
 
 	I2C_BUS->CR2 |= I2C_CR2_START;
-
-	while ((I2C_BUS->ISR & I2C_ISR_BUSY) == 0)
-		;
 }
 
 void I2C_class::stop(void) {
@@ -98,19 +95,32 @@ I2C_Status I2C_class::write(uint8_t addr, uint8_t *data, uint8_t size) {
 		};
 		I2C_BUS->TXDR = data[i];
 	}
-	while(I2C_BUS->ISR & I2C_ISR_TC);
+	for (volatile uint32_t i = 0;; i++) {
+		if ((I2C_BUS->ISR & I2C_ISR_STOPF))
+			break;
+		if (i >= 0xFFFFFFF)
+			return I2C_ERROR;
+	}
 	stop();
 	return I2C_SUCCESS;
 }
 
 I2C_Status I2C_class::read(uint8_t addr, uint8_t *data, uint8_t size) {
 	startDirectionAdressSize(I2C_Receiver, addr, size);
-	for (uint8_t i = 0; i < size; i++) {
+	asm("nop");
+	asm("nop");
+	for (volatile uint8_t i = 0; i < size; i++) {
 		while ((I2C_BUS->ISR & I2C_ISR_RXNE) == 0)
 			;
-		data[i] = I2C_BUS->RXDR;
+		volatile uint8_t val = I2C_BUS->RXDR;
+		data[i] = val;
 	}
-	while(I2C_BUS->ISR & I2C_ISR_TC);
+	for (volatile uint32_t i = 0;; i++) {
+		if ((I2C_BUS->ISR & I2C_ISR_STOPF))
+			break;
+		if (i >= 0xFFFFFFF)
+			return I2C_ERROR;
+	}
 	stop();
 	return I2C_SUCCESS;
 }

@@ -10,16 +10,17 @@
 #include <FSM/ShowCurHum.h>
 #include <FSM/ShowCurrentTime.h>
 #include <FSM/ShowInstHum.h>
+#include <HAL/Encoder.h>
+#include <HAL/LedDisplay.h>
+#include <HAL/Output.h>
+#include <Settings.h>
 
 namespace FSM {
-void ShowCurrentHumidity::NodeEnterFunction() {
-
-}
 
 FsmNode& ShowCurrentHumidity::NodeSwitchFunction(void) {
 
 	FsmNode& curTime = ShowCurrentTime::getInstance();
-	EndpointNode&  editTime  =EditCurrentTime::getInstance();
+	EndpointNode& editTime = EditCurrentTime::getInstance();
 	if (HAL::Encoder.isLongPressed())
 		return (ShowInstalledHumidity::getInstance());
 	else if (HAL::Encoder.isPressed())
@@ -32,9 +33,5 @@ FsmNode& ShowCurrentHumidity::NodeSwitchFunction(void) {
 	HAL::Out.autoSwitch();
 
 	return *this;
-}
-
-void ShowCurrentHumidity::NodeExitFunction(void) {
-
 }
 }

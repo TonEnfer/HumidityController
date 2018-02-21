@@ -1,11 +1,13 @@
 /*
  * delay.cpp
  *
- *  Created on: 12 февр. 2018 г.
+ *  Created on: 12 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
+#include <stm32f0xx.h>
 #include <delay.h>
+
 static volatile uint32_t TimingDelay; // __IO -- volatile
 
 // SysTick interrupt handler

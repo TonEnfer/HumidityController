@@ -8,9 +8,7 @@
 #ifndef I2C_H_
 #define I2C_H_
 
-#include <main.h>
-#include <HAL/Drivers/GPIO.h>
-#include <HAL/LedDisplay.h>
+#include <sys/_stdint.h>
 
 namespace HAL {
 

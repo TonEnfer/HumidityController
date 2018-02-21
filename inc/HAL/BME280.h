@@ -139,8 +139,6 @@ public:
 	void init();
 	uint16_t getHumidity();
 	uint16_t getTemperature();
-	~BME280() {
-	}
 private:
 	inline void writeReg(uint8_t reg, uint8_t value);
 	I2C_Status readReg(uint8_t reg, uint8_t* value, uint8_t size);

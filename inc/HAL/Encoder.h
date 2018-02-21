@@ -8,9 +8,7 @@
 #ifndef ENCODER_H_
 #define ENCODER_H_
 
-#include <main.h>
-#include <HAL/Drivers/GPIO.h>
-#include <delay.h>
+#include <sys/_stdint.h>
 
 namespace HAL {
 class Encoder_class {

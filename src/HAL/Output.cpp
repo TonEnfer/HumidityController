@@ -1,16 +1,15 @@
 /*
  * Output.cpp
  *
- *  Created on: 30 янв. 2018 г.
+ *  Created on: 30 пїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
-// TODO Реализовать методы
-#include <HAL/Output.h>
-//Используется пин PB1
-namespace HAL {
-Output::Output() {
 
-}
+#include <HAL/Output.h>
+#include <stm32f0xx.h>
+#include <Settings.h>
+
+namespace HAL {
 void Output::init() {
 	RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
 

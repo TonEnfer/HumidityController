@@ -5,7 +5,10 @@
  *      Author: anton.samoylov
  */
 // TODO ��������� ������
+#include <HAL/Drivers/GPIO.h>
 #include <HAL/Encoder.h>
+#include <stm32f0xx.h>
+#include <system_stm32f0xx.h>
 
 extern "C" void EXTI0_1_IRQHandler() {
 	static uint8_t oldA, oldB;

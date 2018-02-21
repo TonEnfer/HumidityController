@@ -1,33 +1,26 @@
 /*
  * FsmNode.h
  *
- *  Created on: 30 ÿíâ. 2018 ã.
+ *  Created on: 30 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: anton.samoylov
  */
 
 #ifndef FSMNODE_H_
 #define FSMNODE_H_
 
-#include <main.h>
-#include <Settings.h>
-
 namespace FSM {
 
 class FsmNode {
-protected:
-	FsmNode() {
-	}
-	virtual ~FsmNode() {
-	}
 public:
 	virtual void NodeEnterFunction(void) {
 	}
-	;
+
 	virtual void NodeExitFunction(void) {
 	}
-	;
-	virtual FsmNode& NodeSwitchFunction(void);
+
+	virtual FsmNode& NodeSwitchFunction(void)=0;
 	virtual void setCallbackNode(FsmNode *cb) {
+		(void) cb;
 	}
 	void startCountingShowTime();
 	void stopCountingShowTime();

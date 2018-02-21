@@ -1,12 +1,14 @@
 /*
  * DHT22.cpp
  *
- *  Created on: 2 февр. 2018 г.
+ *  Created on: 2 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
+#include <delay.h>
 #include <HAL/DHT22.h>
-// TODO Реализовать методы
+
+// TODO пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 namespace HAL {
 
 DHT22::DHT22() {

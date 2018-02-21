@@ -5,7 +5,13 @@
  *      Author: anton.samoylov
  */
 
+#include <FSM/EditInstHum.h>
+#include <FSM/ShowCurHum.h>
 #include <FSM/ShowInstHum.h>
+#include <HAL/Encoder.h>
+#include <HAL/LedDisplay.h>
+#include <Settings.h>
+
 namespace FSM {
 void ShowInstalledHumidity::NodeEnterFunction(void) {
 	Settings::Parameters.setNodeShowTime(5);

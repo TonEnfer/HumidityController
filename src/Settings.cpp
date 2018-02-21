@@ -5,25 +5,27 @@
  *      Author: anton.samoylov
  */
 
+#include <HAL/Drivers/Flash.h>
 #include <Settings.h>
+#include <stm32f0xx.h>
 
 namespace Settings {
 Settings_class::Settings_class() {
 	nsParam.currentHumidity = 8;
-	nsParam.installedTime = (3*60)-1;
+	nsParam.installedTime = (3 * 60) - 1;
 	sParam.maximumHumidity = 53;
 	nsParam.nodeShowTime = 5;
 	restoreFromMemory();
 }
-uint32_t Settings_class::getNodeShowTime(){
+uint32_t Settings_class::getNodeShowTime() {
 	return nsParam.nodeShowTime;
 }
-void Settings_class::setNodeShowTime(uint32_t sht){
+void Settings_class::setNodeShowTime(uint32_t sht) {
 	nsParam.nodeShowTime = sht;
 }
 
-void Settings_class::decNodeShowTime(){
-	if(nsParam.nodeShowTime != 0)
+void Settings_class::decNodeShowTime() {
+	if (nsParam.nodeShowTime != 0)
 		nsParam.nodeShowTime--;
 }
 
@@ -74,7 +76,7 @@ void Settings_class::saveToMemory() {
 	HAL::Flash.unlock();
 	HAL::Flash.erasePage(SETTINGS_START_ADDRESS);	//������� ��������
 	uint16_t *tmp = (uint16_t *) &sParam;
-	for (uint8_t i = 0; i < sizeof(savableParam_t); i++) {	//���������� � ������ �� 16 ���
+	for (uint8_t i = 0; i < sizeof(savableParam_t); i++) {//���������� � ������ �� 16 ���
 		HAL::Flash.programHalfWord(SETTINGS_START_ADDRESS + 2 * i, *tmp++);
 	}
 	HAL::Flash.lock();

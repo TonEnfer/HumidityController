@@ -1,16 +1,16 @@
 /*
  * DHT22.h
  *
- *  Created on: 2 февр. 2018 г.
+ *  Created on: 2 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
 #ifndef DHT22_H_
 #define DHT22_H_
 
-#include <main.h>
 #include <HAL/Sensor.h>
-#include <delay.h>
+#include <sys/_stdint.h>
+#include <stm32f0xx.h>
 
 /* Port and pin with DHT22 sensor*/
 #define DHT22_GPIO_PORT            GPIOB
@@ -32,16 +32,18 @@ public:
 	void init();
 	uint16_t getHumidity();
 	uint16_t getTemperature();
-	~DHT22(){};
+	~DHT22() {
+	}
+	;
 
 private:
 	uint16_t bits[40];
 
-	uint8_t  hMSB = 0;
-	uint8_t  hLSB = 0;
-	uint8_t  tMSB = 0;
-	uint8_t  tLSB = 0;
-	uint8_t  parity_rcv = 0;
+	uint8_t hMSB = 0;
+	uint8_t hLSB = 0;
+	uint8_t tMSB = 0;
+	uint8_t tLSB = 0;
+	uint8_t parity_rcv = 0;
 
 	uint32_t getReadings(void);
 	uint16_t decodeReadings(void);

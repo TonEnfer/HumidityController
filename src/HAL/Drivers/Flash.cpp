@@ -1,16 +1,17 @@
 /*
  * Flash.cpp
  *
- *  Created on: 10 февр. 2018 г.
+ *  Created on: 10 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
 #include <HAL/Drivers/Flash.h>
+#include <stm32f0xx.h>
 
 namespace HAL {
 Flash_class::Flash_class() {
 }
-;
+
 void Flash_class::unlock() {
 	if ((FLASH->CR & FLASH_CR_LOCK) != RESET) {
 		/* Unlocking the program memory access */

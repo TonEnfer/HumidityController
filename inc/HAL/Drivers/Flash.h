@@ -1,13 +1,15 @@
 /*
  * Flash.h
  *
- *  Created on: 10 февр. 2018 г.
+ *  Created on: 10 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: anton.samoylov
  */
 
 #ifndef FLASH_H_
 #define FLASH_H_
-#include "stm32f0xx.h"
+
+#include <sys/_stdint.h>
+
 namespace HAL {
 
 #define IS_FLASH_PROGRAM_ADDRESS(ADDRESS) (((ADDRESS) >= 0x08000000) && ((ADDRESS) <= 0x0800FFFF))
