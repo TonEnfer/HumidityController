@@ -61,7 +61,7 @@ uint8_t BME280::readReg(uint8_t reg) {
 }
 I2C_Status BME280::readReg(uint8_t reg, uint8_t* value, uint8_t size) {
 	// Read register value
-	if (HAL::I2C.write(BME280_ADDR, &reg, size) == I2C_ERROR)
+	if (HAL::I2C.write(BME280_ADDR, &reg, 0) == I2C_ERROR)
 		return I2C_ERROR;
 	if (HAL::I2C.read(BME280_ADDR, value, size) == I2C_ERROR)
 		return I2C_ERROR;
