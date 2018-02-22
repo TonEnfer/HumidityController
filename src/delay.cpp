@@ -12,7 +12,6 @@ static volatile uint32_t TimingDelay; // __IO -- volatile
 
 // SysTick interrupt handler
 void SysTick_Handler() {
-//	volatile uint32_t  a = SysTick->CTRL;
 	if (TimingDelay != 0) {
 		TimingDelay--;
 	}
@@ -25,7 +24,7 @@ void delay_ms(uint32_t mSecs) {
 	if (status)
 		return;
 	TimingDelay = mSecs + 1;
-	while ((int32_t) TimingDelay != 0)
+	while (TimingDelay != 0)
 		;
 	SysTick->CTRL &= ~(SysTick_CTRL_ENABLE_Msk);
 }

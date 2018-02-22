@@ -8,6 +8,9 @@
 #include <HAL/Output.h>
 #include <stm32f0xx.h>
 #include <Settings.h>
+#include <PID.h>
+
+PID Regulator = PID(2,0,0,0);
 
 namespace HAL {
 void Output::init() {
@@ -15,6 +18,7 @@ void Output::init() {
 
 	GPIOB->MODER |= GPIO_MODER_MODER1_0;
 	GPIOB->BSRR |= GPIO_BSRR_BR_1;
+	Regulator.init();
 }
 void Output::on() {
 	GPIOB->BSRR |= GPIO_BSRR_BS_1;
@@ -33,4 +37,5 @@ void Output::autoSwitch() {
 		this->off();
 }
 Output Out = Output();
+
 }

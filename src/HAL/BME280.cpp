@@ -33,7 +33,7 @@ uint16_t BME280::getHumidity() {
 		getTemperature();
 	int32_t UH = 0;
 	readUH(&UH);
-	return calcH(UH);
+	return calcH(UH)/1024;
 }
 uint16_t BME280::getTemperature() {
 	int32_t UT = 0;

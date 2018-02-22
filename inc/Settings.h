@@ -17,7 +17,7 @@ typedef struct {
 	uint32_t installedTime = 5;		//4 ����
 	uint32_t nodeShowTime = 5;		//4 ����
 	uint8_t currentHumidity = 0;	//1 ����
-									//3 - ��� ������������
+	uint8_t currentTemp = 0;								//3 - ��� ������������
 } notSavableParam_t;
 
 class Settings_class {

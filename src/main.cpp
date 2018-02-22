@@ -23,7 +23,9 @@ int main() {
 	}
 	while (true) {
 		fsm.run();
-		Settings::Parameters.setCurHumidity(HAL::Sensor.getHumidity());
+		HAL::Sensor.getTemperature();
+		uint8_t H = HAL::Sensor.getHumidity();
+		Settings::Parameters.setCurHumidity(H);
 		delay_us(100);
 	}
 	return 0;

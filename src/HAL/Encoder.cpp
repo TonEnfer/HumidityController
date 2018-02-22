@@ -33,6 +33,7 @@ volatile static uint16_t pressedPeriods = 0;
 #define BUTTON_PERIOD 100
 #define BUTTON_SHORT_PERIOD 10
 #define BUTTON_LONG_PERIOD 5000
+
 extern "C" void TIM14_IRQHandler() {
 	uint8_t newState = HAL::GPIO::readInputDataBit(GPIOA, GPIO_IDR_0);
 
