@@ -10,7 +10,7 @@
 #include <Settings.h>
 #include <PID.h>
 
-PID Regulator = PID(2,0,0,0);
+//PID Regulator = PID(2,0,0);
 
 namespace HAL {
 void Output::init() {

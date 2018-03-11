@@ -14,7 +14,7 @@ namespace HAL {
 
 class LedDisplay {
 protected:
-	uint16_t numArray[11] = { 0b10000011001110, //0
+	const uint16_t numArray[11] = { 0b10000011001110, //0
 			0b10000000000010, //1
 			0b10000001101100, //2
 			0b10000001101010, //3

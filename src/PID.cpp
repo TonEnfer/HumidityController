@@ -8,8 +8,8 @@
 #include <PID.h>
 
 extern "C" void TIM17_IRQHandler() {
-	uint32_t outVal = Regulator.compute(Settings::Parameters.getCurHumidity());
-	Regulator.setValue(outVal);
+//	uint32_t outVal = Regulator.compute(Settings::Parameters.getCurHumidity());
+//	Regulator.setValue(outVal);
 }
 
 PID::PID(uint32_t Kp, uint32_t Ki, uint32_t Kd) {

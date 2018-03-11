@@ -18,10 +18,10 @@ void BME280::init() {
 	reset();
 	delay_ms(5);
 //	setStandby(BME280_STBY_1s); // Set normal mode inactive duration (standby time)
-	setFilter(BME280_FILTER_4); // Set IIR filter constant
-	setOSRST(BME280_OSRS_T_x4); // Set oversampling for temperature
-	setOSRSP(BME280_OSRS_P_x2); // Set oversampling for pressure
-	setOSRSH(BME280_OSRS_H_x4); // Set oversampling for humidity
+	setFilter(BME280_FILTER_OFF); // Set IIR filter constant
+	setOSRST(BME280_OSRS_T_x1); // Set oversampling for temperature
+	setOSRSP(BME280_OSRS_P_SKIP); // Set oversampling for pressure
+	setOSRSH(BME280_OSRS_H_x1); // Set oversampling for humidity
 
 	setMode(BME280_MODE_NORMAL); // Set normal mode (perpetual periodic conversion)
 
@@ -33,12 +33,12 @@ uint16_t BME280::getHumidity() {
 		getTemperature();
 	int32_t UH = 0;
 	readUH(&UH);
-	return calcH(UH)/1024;
+	return ((uint32_t) calcH(UH) / (uint32_t) 1024);
 }
 uint16_t BME280::getTemperature() {
 	int32_t UT = 0;
 	readUT(&UT);
-	return calcT(UT);
+	return calcT(UT) / 100;
 }
 
 // Write new value to BME280 register
@@ -392,21 +392,22 @@ uint32_t BME280::calcP(int32_t UP) {
 // note: BME280_CalcT must be called before calling this function
 // note: code from the BME280 datasheet (rev 1.1)
 uint32_t BME280::calcH(int32_t UH) {
-	int32_t vx1;
+	int32_t out;
 
-	vx1 = t_fine - (int32_t) 76800;
-	vx1 = ((((UH << 14) - ((int32_t) cal_param.dig_H4 << 20)
-			- ((int32_t) cal_param.dig_H5 * vx1)) + (int32_t) 16384) >> 15)
-			* (((((((vx1 * (int32_t) cal_param.dig_H6) >> 10)
-					* (((vx1 * (int32_t) cal_param.dig_H3) >> 11)
-							+ (int32_t) 32768)) >> 10) + (int32_t) 2097152)
-					* ((int32_t) cal_param.dig_H2) + 8192) >> 14);
-	vx1 -= ((((vx1 >> 15) * (vx1 >> 15)) >> 7) * (int32_t) cal_param.dig_H1)
-			>> 4;
-	vx1 = (vx1 < 0) ? 0 : vx1;
-	vx1 = (vx1 > 419430400) ? 419430400 : vx1;
+	out = t_fine - (int32_t) 76800;
 
-	return (uint32_t) (vx1 >> 12);
+	out = (((((UH << 14) - (((int32_t) cal_param.dig_H4) << 20)
+			- (((int32_t) cal_param.dig_H5) * out)) + ((int32_t) 16384)) >> 15)
+			* (((((((out * ((int32_t) cal_param.dig_H6)) >> 10)
+					* (((out * ((int32_t) cal_param.dig_H3)) >> 11)
+							+ ((int32_t) 32768))) >> 10) + ((int32_t) 2097152))
+					* ((int32_t) cal_param.dig_H2) + 8192) >> 14));
+	out = (out
+			- (((((out >> 15) * (out >> 15)) >> 7)
+					* ((int32_t) cal_param.dig_H1)) >> 4));
+	out = (out < 0 ? 0 : out);
+	out = (out > 419430400 ? 419430400 : out);
+	return (uint32_t) (out >> 12);
 }
 
 // Fixed point Pa to mmHg conversion (Pascals to millimeters of mercury)
